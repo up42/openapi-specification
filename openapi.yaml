@@ -1,0 +1,1262 @@
+openapi: 3.0.0
+info:
+  title: UP42 API
+  description: 'TODO: Add Description'
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://example.com
+  variables: {}
+- url: http://localhost:8081/internal/users
+  variables: {}
+paths:
+  /projects/{project_id}/settings:
+    get:
+      tags:
+      - projects
+      summary: Get project settings
+      description: 'TODO: Add Description'
+      operationId: GetProjectSettings
+      parameters:
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+    put:
+      tags:
+      - projects
+      summary: Update project settings
+      description: 'TODO: Add Description'
+      operationId: UpdateProjectSettings
+      parameters:
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateprojectsettingsRequest'
+              description: ''
+            example:
+            - name: JOB_QUERY_MAX_AOI_SIZE
+              value: 100
+            - name: MAX_CONCURRENT_JOBS
+              value: 100
+            - name: JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
+              value: 100
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/workflows:
+    get:
+      tags:
+      - workflows
+      summary: Get Workflows
+      description: 'TODO: Add Description'
+      operationId: GetWorkflows
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+    post:
+      tags:
+      - workflows
+      summary: Create Workflow
+      description: 'TODO: Add Description'
+      operationId: CreateWorkflow
+      parameters:
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWorkflowRequest'
+            example:
+              name: workflow-test-name
+              description: workflow test description
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/workflows/{workflow_id}:
+    get:
+      tags:
+      - workflows
+      summary: Get Workflow
+      description: 'TODO: Add Description'
+      operationId: GetWorkflow
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: workflow_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+    put:
+      tags:
+      - workflows
+      summary: Update Workflow
+      description: 'TODO: Add Description'
+      operationId: UpdateWorkflow
+      parameters:
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: workflow_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWorkflowRequest'
+            example:
+              name: workflow-test-name
+              description: workflow test description
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/workflows/{workflow_id}/tasks:
+    post:
+      tags:
+      - workflows
+      summary: Create workflow tasks
+      description: 'TODO: Add Description'
+      operationId: CreateWorkflowTasks
+      parameters:
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: workflow_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/CreateworkflowtasksRequest'
+              description: ''
+            example:
+            - name: task1
+              parentName: 
+              blockName: one-atlas/basemap
+            - name: task2
+              parentName: task1
+              blockName: dabeeo/roof-detection
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+    get:
+      tags:
+      - workflows
+      summary: Get Workflow tasks
+      description: 'TODO: Add Description'
+      operationId: GetWorkflowTasks
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: workflow_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs:
+    get:
+      tags:
+      - jobs
+      summary: Get Jobs
+      description: 'TODO: Add Description'
+      operationId: GetJobs
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/workflows/{workflow_id}/jobs:
+    post:
+      tags:
+      - jobs
+      summary: Create and Run Job
+      description: 'TODO: Add Description'
+      operationId: CreateAndRunJob
+      parameters:
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: workflow_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateandRunJobRequest'
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs/{job_id}:
+    get:
+      tags:
+      - jobs
+      summary: Get Job
+      description: 'TODO: Add Description'
+      operationId: GetJob
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs/{job_id}/tasks:
+    get:
+      tags:
+      - jobs
+      summary: Get Job tasks
+      description: 'TODO: Add Description'
+      operationId: GetJobTasks
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /jobs/{job_id}/cancel:
+    post:
+      tags:
+      - jobs
+      summary: Cancel Job
+      description: 'TODO: Add Description'
+      operationId: CancelJob
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs/{job_id}/outputs/data-json:
+    get:
+      tags:
+      - job_extras
+      summary: Get Job Outputs - data.json
+      description: 'TODO: Add Description'
+      operationId: Get job outputs  data.json
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs/{job_id}/downloads/results:
+    get:
+      tags:
+      - job_extras
+      summary: Get Job Outputs - signed url
+      description: Downloads the job results tarball URL delivered as a field in the JSON through this call.
+      operationId: Get job outputs  signed url
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/logs:
+    get:
+      tags:
+      - job_extras
+      summary: Get Job Task Logs
+      description: 'TODO: Add Description'
+      operationId: GetJobTaskLogs
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/data-json:
+    get:
+      tags:
+      - job_extras
+      summary: Get Job Task Outputs - data.json
+      description: 'TODO: Add Description'
+      operationId: Get job task outputs  data.json
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: task_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /blocks:
+    get:
+      tags:
+      - blocks
+      summary: Get Public Blocks
+      description: 'TODO: Add Description'
+      operationId: GetPublicBlocks
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /blocks/{block_id}:
+    get:
+      tags:
+      - blocks
+      summary: Get Public Block detail
+      description: 'TODO: Add Description'
+      operationId: GetPublicBlockDetail
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: block_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /marketplace/blocks:
+    get:
+      tags:
+      - blocks
+      summary: Get Marketplace Blocks
+      description: Public endpoint to get blocks for the marketplace
+      operationId: GetMarketplaceBlocks
+      parameters: []
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /users/me/blocks:
+    get:
+      tags:
+      - blocks_custom
+      summary: Get Custom Blocks
+      description: 'TODO: Add Description'
+      operationId: GetCustomBlocks
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /users/me/blocks/{block_id}:
+    get:
+      tags:
+      - blocks_custom
+      summary: Get Custom Block Detail
+      description: 'TODO: Add Description'
+      operationId: GetCustomBlockDetail
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: block_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+    delete:
+      tags:
+      - blocks_custom
+      summary: Delete Custom Block
+      description: 'TODO: Add Description'
+      operationId: DeleteCustomBlock
+      parameters:
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: block_id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+  /validate-schema/block:
+    post:
+      tags:
+      - blocks_custom
+      summary: Validate Blocks Manifest
+      description: 'TODO: Add Description'
+      operationId: ValidateBlocksManifest
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateBlocksManifestRequest'
+            example:
+              _up42_specification_version: 1
+              name: sentinel2-aoiclipped
+              type: data
+              tags:
+              - Sentinel
+              - Sentinel-2
+              - MSI
+              - Imagery
+              - L2A
+              - BOA
+              display_name: Sentinel-2 Level 2 (BOA) AOI clipped
+              description: This block provides Sentinel-2 imagery clipped to all webmercator tiles intersecting a given bounding box or AOI on a given zoom level. The part of the image that does not intersect with these tiles will be black. The block outputs a single GeoTIFF file and will store the AOI within the output feature geometry.
+              parameters:
+                bbox:
+                  type: string
+                  default: 
+                intersects:
+                  type: geometry
+                time:
+                  type: dateRange
+                  default: 
+                limit:
+                  type: number
+                  default: 1
+                zoom_level:
+                  type: number
+                  default: 17
+              machine:
+                type: large
+              internal:
+                dry_run_supported: true
+              input_capabilities:
+                custom.this.is.my.capability: {}
+              output_capabilities:
+                up42.data.aoiclipped: {}
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
+components:
+  schemas:
+    UpdateprojectsettingsRequest:
+      title: UpdateprojectsettingsRequest
+      required:
+      - name
+      - value
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      example:
+        name: JOB_QUERY_MAX_AOI_SIZE
+        value: 100
+    CreateWorkflowRequest:
+      title: CreateWorkflowRequest
+      required:
+      - name
+      - description
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        name: workflow-test-name
+        description: workflow test description
+    CreateworkflowtasksRequest:
+      title: CreateworkflowtasksRequest
+      required:
+      - name
+      - parentName
+      - blockName
+      type: object
+      properties:
+        name:
+          type: string
+        parentName:
+          type: string
+          nullable: true
+        blockName:
+          type: string
+      example:
+        name: task1
+        parentName: 
+        blockName: one-atlas/basemap
+    UpdateWorkflowRequest:
+      title: UpdateWorkflowRequest
+      required:
+      - name
+      - description
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+      example:
+        name: workflow-test-name
+        description: workflow test description
+    CreateandRunJobRequest:
+      title: CreateandRunJobRequest
+      required:
+      - oneatlas-spot-aoiclipped:1
+      - tiling:1
+      type: object
+      properties:
+        oneatlas-spot-aoiclipped:1:
+          $ref: '#/components/schemas/OneatlasSpotAoiclipped1'
+        tiling:1:
+          $ref: '#/components/schemas/Tiling1'
+    OneatlasSpotAoiclipped1:
+      title: OneatlasSpotAoiclipped1
+      required:
+      - bbox
+      - time
+      - limit
+      - intersects
+      - zoom_level
+      type: object
+      properties:
+        bbox:
+          type: string
+          nullable: true
+        time:
+          type: string
+          nullable: true
+        limit:
+          type: integer
+          format: int32
+        intersects:
+          $ref: '#/components/schemas/Intersects'
+        zoom_level:
+          type: integer
+          format: int32
+    Intersects:
+      title: Intersects
+      required:
+      - type
+      - coordinates
+      type: object
+      properties:
+        type:
+          type: string
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+    Tiling1:
+      title: Tiling1
+      required:
+      - tile_width
+      - tile_height
+      - output_prefix
+      - augmentation_factor
+      type: object
+      properties:
+        tile_width:
+          type: integer
+          format: int32
+        tile_height:
+          type: integer
+          format: int32
+        output_prefix:
+          type: string
+        augmentation_factor:
+          type: integer
+          format: int32
+      example:
+        tile_width: 768
+        tile_height: 768
+        output_prefix: ''
+        augmentation_factor: 1
+    ValidateBlocksManifestRequest:
+      title: ValidateBlocksManifestRequest
+      required:
+      - _up42_specification_version
+      - name
+      - type
+      - tags
+      - display_name
+      - description
+      - parameters
+      - machine
+      - internal
+      - input_capabilities
+      - output_capabilities
+      type: object
+      properties:
+        _up42_specification_version:
+          type: integer
+          format: int32
+        name:
+          type: string
+        type:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+          description: ''
+        display_name:
+          type: string
+        description:
+          type: string
+        parameters:
+          $ref: '#/components/schemas/Parameters'
+        machine:
+          $ref: '#/components/schemas/Machine'
+        internal:
+          $ref: '#/components/schemas/Internal'
+        input_capabilities:
+          $ref: '#/components/schemas/InputCapabilities'
+        output_capabilities:
+          $ref: '#/components/schemas/OutputCapabilities'
+      example:
+        _up42_specification_version: 1
+        name: sentinel2-aoiclipped
+        type: data
+        tags:
+        - Sentinel
+        - Sentinel-2
+        - MSI
+        - Imagery
+        - L2A
+        - BOA
+        display_name: Sentinel-2 Level 2 (BOA) AOI clipped
+        description: This block provides Sentinel-2 imagery clipped to all webmercator tiles intersecting a given bounding box or AOI on a given zoom level. The part of the image that does not intersect with these tiles will be black. The block outputs a single GeoTIFF file and will store the AOI within the output feature geometry.
+        parameters:
+          bbox:
+            type: string
+            default: 
+          intersects:
+            type: geometry
+          time:
+            type: dateRange
+            default: 
+          limit:
+            type: number
+            default: 1
+          zoom_level:
+            type: number
+            default: 17
+        machine:
+          type: large
+        internal:
+          dry_run_supported: true
+        input_capabilities:
+          custom.this.is.my.capability: {}
+        output_capabilities:
+          up42.data.aoiclipped: {}
+    Parameters:
+      title: Parameters
+      required:
+      - bbox
+      - intersects
+      - time
+      - limit
+      - zoom_level
+      type: object
+      properties:
+        bbox:
+          $ref: '#/components/schemas/Bbox'
+        intersects:
+          $ref: '#/components/schemas/Intersects1'
+        time:
+          $ref: '#/components/schemas/Time'
+        limit:
+          $ref: '#/components/schemas/Limit'
+        zoom_level:
+          $ref: '#/components/schemas/ZoomLevel'
+      example:
+        bbox:
+          type: string
+          default: 
+        intersects:
+          type: geometry
+        time:
+          type: dateRange
+          default: 
+        limit:
+          type: number
+          default: 1
+        zoom_level:
+          type: number
+          default: 17
+    Bbox:
+      title: Bbox
+      required:
+      - type
+      - default
+      type: object
+      properties:
+        type:
+          type: string
+        default:
+          type: string
+          nullable: true
+      example:
+        type: string
+        default: 
+    Intersects1:
+      title: Intersects1
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      example:
+        type: geometry
+    Time:
+      title: Time
+      required:
+      - type
+      - default
+      type: object
+      properties:
+        type:
+          type: string
+        default:
+          type: string
+          nullable: true
+      example:
+        type: dateRange
+        default: 
+    Limit:
+      title: Limit
+      required:
+      - type
+      - default
+      type: object
+      properties:
+        type:
+          type: string
+        default:
+          type: integer
+          format: int32
+      example:
+        type: number
+        default: 1
+    ZoomLevel:
+      title: ZoomLevel
+      required:
+      - type
+      - default
+      type: object
+      properties:
+        type:
+          type: string
+        default:
+          type: integer
+          format: int32
+      example:
+        type: number
+        default: 17
+    Machine:
+      title: Machine
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      example:
+        type: large
+    Internal:
+      title: Internal
+      required:
+      - dry_run_supported
+      type: object
+      properties:
+        dry_run_supported:
+          type: boolean
+      example:
+        dry_run_supported: true
+    InputCapabilities:
+      title: InputCapabilities
+      required:
+      - custom.this.is.my.capability
+      type: object
+      properties:
+        custom.this.is.my.capability:
+          type: object
+      example:
+        custom.this.is.my.capability: {}
+    OutputCapabilities:
+      title: OutputCapabilities
+      required:
+      - up42.data.aoiclipped
+      type: object
+      properties:
+        up42.data.aoiclipped:
+          type: object
+      example:
+        up42.data.aoiclipped: {}
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+- name: projects
+- name: workflows
+- name: jobs
+- name: job_extras
+- name: blocks
+- name: blocks_custom
+- name: credits
+  description: ''
