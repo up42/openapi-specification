@@ -1,13 +1,29 @@
 openapi: 3.0.0
 info:
   title: UP42 API
-  description: 'TODO: Add Description'
-  contact: {}
-  version: '1.0'
+  description: >
+    # Introduction
+
+    This specification describes the UP42 public API. It is a work in
+    progress and both updates and new endpoints are added as
+    needed. If there is something that you would like to do with our
+    API but is not listed here, then please write to
+    [support@up42.com](mailto:support@up42.com) stating what you want
+    to do via our API and we will support in setting things up so that
+    we solve the issue at hand.
+
+    The auhtoritaive source for the specification is available at
+    [github](https://github.com/up42/openapi-specification).
+    
+  contact:
+    name: API support
+    email: support@up42.com
+  version: '0.9'
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+    url: href="http://creativecommons.org/licenses/by-nc-nd/4.0/
 servers:
-- url: http://example.com
-  variables: {}
-- url: http://localhost:8081/internal/users
+- url: https://api.up42.com
   variables: {}
 paths:
   /projects/{project_id}/settings:
@@ -15,24 +31,65 @@ paths:
       tags:
       - projects
       summary: Get project settings
-      description: 'TODO: Add Description'
+      description: >
+        Get the project settings, i.e., the limits for AOI size in square km
+        and number of simultanesouly running jobs for this project. 
       operationId: GetProjectSettings
       parameters:
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       responses:
         200:
-          description: ''
-          headers: {}
+          description: OK
+          content:
+            application/json:
+              example:
+                error: null
+                data:
+                  - id: cca028e6-4f24-4ea0-9564-d82ce80aac7d
+                    createdAt: '2019-10-29T11:04:03.561Z'
+                    updatedAt: '2019-10-29T11:04:03.561Z'
+                    name: MAX_CONCURRENT_JOBS
+                    value: '1'
+                    range:
+                      min: 1
+                      max: 10
+                    displayId: cca028e6
+                  - id: c00d5803-76d7-4259-be17-ac5ae583f5cb
+                    createdAt: '2019-10-29T11:04:03.562Z'
+                    updatedAt: '2019-10-29T11:04:03.562Z'
+                    name: JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
+                    value: '10'
+                    range:
+                      min: 1
+                      max: 20
+                    displayId: c00d5803
+                  - id: bf7d63d3-7ae0-40d3-9415-d1503a351dba
+                    createdAt: '2019-10-29T11:04:03.562Z'
+                    updatedAt: '2019-10-29T11:04:03.562Z'
+                    name: JOB_QUERY_MAX_AOI_SIZE
+                    value: '100'
+                    range:
+                      min: 1
+                      max: 1000
+                    displayId: bf7d63d3
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: >
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T11:54:38Z. 
+                    Current time: 2019-11-29T15:07:30Z, a difference of 11572156
+                    milliseconds.  Allowed clock skew: 0 milliseconds.
+                  details: null
+                data: null
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
     put:
       tags:
       - projects
@@ -42,11 +99,9 @@ paths:
       parameters:
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       requestBody:
         description: ''
         content:
@@ -66,18 +121,42 @@ paths:
         required: true
       responses:
         200:
-          description: ''
-          headers: {}
+          description: OK
+          content:
+            application/json:
+              example:
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: >
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T11:54:38Z. 
+                    Current time: 2019-11-29T15:07:30Z, a difference of 11572156
+                    milliseconds.  Allowed clock skew: 0 milliseconds.
+                  details: null
+                data: null
+                
+        404:
+          description: Not Found
+          content:
+            application/json:
+              example:
+                error:
+                  code: RESOURCE_NOT_FOUND
+                  message: Project not found with id '1b0015e3-cc4f-4da6-9761-fba74ba57f69'
+                  details: null
+                data: null
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
   /projects/{project_id}/workflows:
     get:
       tags:
       - workflows
-      summary: Get Workflows
-      description: 'TODO: Add Description'
+      summary: Get all project specific workflows
+      description: >
+        Get all the workflows for a given project
       operationId: GetWorkflows
       parameters:
       - name: Content-Type
@@ -90,19 +169,96 @@ paths:
           example: application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       responses:
         200:
-          description: ''
-          headers: {}
+          description: OK
+          content:
+            application/json:
+              example:
+                error: null
+                data:
+                  - id: 1ef6c73a-a155-489e-9ec2-b073c6e74da9
+                    name: S1 SLC
+                    description: ''
+                    createdAt: '2019-10-29T11:04:27.915Z'
+                    updatedAt: '2019-10-29T11:04:38.973Z'
+                    totalProcessingTime: 31
+                  - id: a51a96a6-60bf-44c2-8936-b69b84711ba4
+                    name: Pléaides download
+                    description: ''
+                    createdAt: '2019-10-29T13:32:31.460Z'
+                    updatedAt: '2019-10-29T13:32:43.216Z'
+                    totalProcessingTime: 152
+                  - id: 266be679-37b9-4b28-948c-ffef3e4a91fd
+                    name: 'Support ticket #175'
+                    description: ''
+                    createdAt: '2019-10-31T10:02:06.014Z'
+                    updatedAt: '2019-10-31T10:02:13.517Z'
+                    totalProcessingTime: 103
+                  - id: b16f2676-1420-4146-b000-529b9ee2b724
+                    name: Pléaides download + pan
+                    description: ''
+                    createdAt: '2019-10-31T10:16:39.325Z'
+                    updatedAt: '2019-11-01T14:39:01.681Z'
+                    totalProcessingTime: 173
+                  - id: 72860ccb-836c-46cb-bf56-d6cf234ec2a8
+                    name: Test multiple ndvi
+                    description: ''
+                    createdAt: '2019-10-31T12:11:07.788Z'
+                    updatedAt: '2019-10-31T12:11:40.958Z'
+                    totalProcessingTime: 0
+                  - id: 17e8dc3e-2914-4011-a248-2d279d77f369
+                    name: SPOT download
+                    description: ''
+                    createdAt: '2019-11-01T14:39:16.943Z'
+                    updatedAt: '2019-11-25T15:43:36.325Z'
+                    totalProcessingTime: 22
+                  - id: 192b025e-75fe-4930-a611-ed08b66f8a5a
+                    name: S2 AOI clipped sobloo
+                    description: ''
+                    createdAt: '2019-11-01T15:54:45.181Z'
+                    updatedAt: '2019-11-01T15:55:17.171Z'
+                  - id: ac5d9bca-7d85-46e8-ba25-90ac540b3964
+                    name: Pléaides pansharpened NDVI
+                    description: ''
+                    createdAt: '2019-11-18T14:16:05.283Z'
+                    updatedAt: '2019-11-18T15:12:07.944Z'
+                    totalProcessingTime: 28
+                  - id: 894ef5be-c576-4f18-8ef9-f26e9eb10d5b
+                    name: S2 Sentinel Hub
+                    description: ''
+                    createdAt: '2019-11-19T13:43:26.022Z'
+                    updatedAt: '2019-11-19T13:43:32.805Z'
+                    totalProcessingTime: 642
+                  - id: 18b2fc26-f56b-434f-9fcf-e53716442202
+                    name: Sentinel 1 AOI clipped test
+                    description: ''
+                    createdAt: '2019-11-21T10:24:55.958Z'
+                    updatedAt: '2019-11-21T10:25:26.027Z'
+                    totalProcessingTime: 9
+                  - id: 949cd962-4a5f-46a6-9d8a-64d15ccdd97b
+                    name: S1 GRD
+                    description: ''
+                    createdAt: '2019-11-21T10:58:24.630Z'
+                    updatedAt: '2019-11-21T10:58:40.514Z'
+                    totalProcessingTime: 4709
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: >
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T11:54:38Z. 
+                    Current time: 2019-11-29T15:07:30Z, a difference of 11572156
+                    milliseconds.  Allowed clock skew: 0 milliseconds.
+                  details: null
+                data: null
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
     post:
       tags:
       - workflows
@@ -129,17 +285,16 @@ paths:
         required: true
       responses:
         200:
-          description: ''
-          headers: {}
+          description: OK
+          content:
+            application/json:
+              example:
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
   /projects/{project_id}/workflows/{workflow_id}:
     get:
       tags:
       - workflows
-      summary: Get Workflow
+      summary: Get a specific workflow
       description: 'TODO: Add Description'
       operationId: GetWorkflow
       parameters:
@@ -153,26 +308,54 @@ paths:
           example: application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/WorkflowID'
       responses:
         200:
-          description: ''
-          headers: {}
+          description: OK
+          content:
+            application/json:
+              example:
+                error: null
+                data:
+                  id: b16f2676-1420-4146-b000-529b9ee2b724
+                  name: Pléaides download + pan
+                  description: ''
+                  createdAt: '2019-10-31T10:16:39.325Z'
+                  updatedAt: '2019-11-01T14:39:01.681Z'
+                  totalProcessingTime: 173
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: > 
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T15:42:05Z. Current time: 2019-11-29T16:45:55Z, 
+                    a difference of 3830764 milliseconds.  Allowed clock skew: 0 milliseconds.
+                  details: null
+                data: null
+        404:
+          description: Not Found
+          content:
+            application/json:
+              example: 
+                error:
+                  code: RESOURCE_NOT_FOUND
+                  message: >
+                    Workflow not found for id b16f2676-1420-4146-b000-529b9ee2b720
+                    and projectId 1b0015e3-cc4f-4da6-9761-fba74ba57f67
+                    and userId 8cd5de7b-82e2-4625-b094-d5392f1cf780
+                  details: null
+                data: null
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
     put:
       tags:
       - workflows
@@ -206,12 +389,11 @@ paths:
         required: true
       responses:
         200:
-          description: ''
-          headers: {}
+          description: OK
+          content:
+            application/json:
+              example:
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
   /projects/{project_id}/workflows/{workflow_id}/tasks:
     post:
       tags:
@@ -1192,6 +1374,7 @@ components:
         default: 1
     ZoomLevel:
       title: ZoomLevel
+      description: ''
       required:
       - type
       - default
@@ -1245,10 +1428,35 @@ components:
           type: object
       example:
         up42.data.aoiclipped: {}
+    ProjectID:
+      title: ProjectID
+      description: >
+        The project ID is the string that appears in the URL when in
+        the console, e.g., https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      example: 1b0015e3-cc4f-4da6-9761-fba74ba57f67
+    WorkflowID:
+      title: WorkflowID
+      description: >
+        The workflow ID is the UUID for a specific workflow, e.g., in the URL
+        https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/workflows/b16f2676-1420-4146-b000-529b9ee2b724
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      example: b16f2676-1420-4146-b000-529b9ee2b724 
   securitySchemes:
     httpBearer:
       type: http
       scheme: bearer
+      bearerFormat: JWT  
 security:
 - httpBearer: []
 tags:
