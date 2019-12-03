@@ -12,7 +12,7 @@ info:
     to do via our API and we will support in setting things up so that
     we solve the issue at hand.
 
-    The auhtoritaive source for the specification is available at
+    The authoritative source for the specification is available at
     [github](https://github.com/up42/openapi-specification).
     
   contact:
@@ -268,11 +268,9 @@ paths:
       parameters:
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       requestBody:
         description: ''
         content:
@@ -365,18 +363,14 @@ paths:
       parameters:
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/WorkflowID'  
       requestBody:
         description: ''
         content:
@@ -404,18 +398,14 @@ paths:
       parameters:
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/WorkflowID'  
       requestBody:
         description: ''
         content:
@@ -458,26 +448,19 @@ paths:
           example: application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/WorkflowID'
       responses:
         200:
           description: ''
           headers: {}
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
   /projects/{project_id}/jobs:
     get:
       tags:
@@ -496,11 +479,9 @@ paths:
           example: application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       responses:
         200:
           description: ''
@@ -519,18 +500,14 @@ paths:
       parameters:
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/WorkflowID'
       requestBody:
         description: ''
         content:
@@ -564,11 +541,9 @@ paths:
           example: application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
         description: ''
@@ -602,11 +577,9 @@ paths:
           example: application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
         description: ''
@@ -656,7 +629,7 @@ paths:
   /projects/{project_id}/jobs/{job_id}/outputs/data-json:
     get:
       tags:
-      - job_extras
+      - job-outputs
       summary: Get Job Outputs - data.json
       description: 'TODO: Add Description'
       operationId: Get job outputs  data.json
@@ -679,11 +652,9 @@ paths:
           example: text/plain,application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
         description: ''
@@ -702,7 +673,7 @@ paths:
   /projects/{project_id}/jobs/{job_id}/downloads/results:
     get:
       tags:
-      - job_extras
+      - job-outputs
       summary: Get Job Outputs - signed url
       description: Downloads the job results tarball URL delivered as a field in the JSON through this call.
       operationId: Get job outputs  signed url
@@ -725,11 +696,9 @@ paths:
           example: text/plain,application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'    
       - name: job_id
         in: path
         description: ''
@@ -748,7 +717,7 @@ paths:
   /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/logs:
     get:
       tags:
-      - job_extras
+      - job-outputs
       summary: Get Job Task Logs
       description: 'TODO: Add Description'
       operationId: GetJobTaskLogs
@@ -771,11 +740,9 @@ paths:
           example: text/plain,application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'   
       - name: job_id
         in: path
         description: ''
@@ -801,7 +768,7 @@ paths:
   /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/data-json:
     get:
       tags:
-      - job_extras
+      - job-outputs
       summary: Get Job Task Outputs - data.json
       description: 'TODO: Add Description'
       operationId: Get job task outputs  data.json
@@ -824,11 +791,9 @@ paths:
           example: text/plain,application/json
       - name: project_id
         in: path
-        description: ''
         required: true
-        style: simple
-        schema:
-          type: string
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
         description: ''
@@ -922,95 +887,10 @@ paths:
       servers:
       - url: http://example.com
         variables: {}
-  /users/me/blocks:
-    get:
-      tags:
-      - blocks_custom
-      summary: Get Custom Blocks
-      description: 'TODO: Add Description'
-      operationId: GetCustomBlocks
-      parameters:
-      - name: Content-Type
-        in: header
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-          example: application/json
-      responses:
-        200:
-          description: ''
-          headers: {}
-      deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
-  /users/me/blocks/{block_id}:
-    get:
-      tags:
-      - blocks_custom
-      summary: Get Custom Block Detail
-      description: 'TODO: Add Description'
-      operationId: GetCustomBlockDetail
-      parameters:
-      - name: Content-Type
-        in: header
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-          example: application/json
-      - name: block_id
-        in: path
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-      responses:
-        200:
-          description: ''
-          headers: {}
-      deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
-    delete:
-      tags:
-      - blocks_custom
-      summary: Delete Custom Block
-      description: 'TODO: Add Description'
-      operationId: DeleteCustomBlock
-      parameters:
-      - name: Content-Type
-        in: header
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-          example: application/json
-      - name: block_id
-        in: path
-        description: ''
-        required: true
-        style: simple
-        schema:
-          type: string
-      responses:
-        200:
-          description: ''
-          headers: {}
-      deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
   /validate-schema/block:
     post:
       tags:
-      - blocks_custom
+      - block-validation
       summary: Validate Blocks Manifest
       description: 'TODO: Add Description'
       operationId: ValidateBlocksManifest
@@ -1451,7 +1331,32 @@ components:
       properties:
         type:
           type: string
-      example: b16f2676-1420-4146-b000-529b9ee2b724 
+      example: b16f2676-1420-4146-b000-529b9ee2b724
+    JobID:
+      title: JobID
+      description: >
+        The job ID is the UUID for a specific job, e.g., in the URL
+        https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/jobs/4a90c5ad-7c2f-4b39-9409-55a3a7ad8640
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      example: 4a90c5ad-7c2f-4b39-9409-55a3a7ad8640
+    TaskID:     
+      title: TaskID
+      description: >
+        The task ID is the UUID for a specific task in a job, e.g., in the URL
+        https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/jobs/4a90c5ad-7c2f-4b39-9409-55a3a7ad8640/tasks/46599eb5-f9dd-4f50-9569-0cbfe27be200
+        it is the last component of the URL.
+      required:
+      - type
+      type: object
+      properties:
+        type:
+          type: string
+      example: 46599eb5-f9dd-4f50-9569-0cbfe27be200
   securitySchemes:
     httpBearer:
       type: http
@@ -1463,8 +1368,6 @@ tags:
 - name: projects
 - name: workflows
 - name: jobs
-- name: job_extras
+- name: job-outputs
 - name: blocks
-- name: blocks_custom
-- name: credits
   description: ''
