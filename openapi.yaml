@@ -546,11 +546,9 @@ paths:
           $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID' 
       responses:
         200:
           description: ''
@@ -582,11 +580,9 @@ paths:
           $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID'
       responses:
         200:
           description: ''
@@ -613,11 +609,9 @@ paths:
           example: application/json
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID'
       responses:
         200:
           description: ''
@@ -657,11 +651,9 @@ paths:
           $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID'
       responses:
         200:
           description: ''
@@ -701,11 +693,9 @@ paths:
           $ref: '#/components/schemas/ProjectID'    
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID'
       responses:
         200:
           description: ''
@@ -745,18 +735,14 @@ paths:
           $ref: '#/components/schemas/ProjectID'   
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID'
       - name: task_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/TaskID'
       responses:
         200:
           description: ''
@@ -796,18 +782,14 @@ paths:
           $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/JobID'
       - name: task_id
         in: path
-        description: ''
         required: true
-        style: simple
         schema:
-          type: string
+          $ref: '#/components/schemas/TaskID'
       responses:
         200:
           description: ''
@@ -1312,7 +1294,9 @@ components:
       title: ProjectID
       description: >
         The project ID is the string that appears in the URL when in
-        the console, e.g., https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67
+        the console, e.g.,
+        `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67`.
+        It is the component of the URL after `projects`.  
       required:
       - type
       type: object
@@ -1324,7 +1308,8 @@ components:
       title: WorkflowID
       description: >
         The workflow ID is the UUID for a specific workflow, e.g., in the URL
-        https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/workflows/b16f2676-1420-4146-b000-529b9ee2b724
+        `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/workflows/b16f2676-1420-4146-b000-529b9ee2b724`.
+        It is the component of the URL after `workflows`.
       required:
       - type
       type: object
@@ -1336,7 +1321,8 @@ components:
       title: JobID
       description: >
         The job ID is the UUID for a specific job, e.g., in the URL
-        https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/jobs/4a90c5ad-7c2f-4b39-9409-55a3a7ad8640
+        `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/jobs/4a90c5ad-7c2f-4b39-9409-55a3a7ad8640`.
+        It ihe component of the URL after `jobs`.
       required:
       - type
       type: object
@@ -1348,8 +1334,8 @@ components:
       title: TaskID
       description: >
         The task ID is the UUID for a specific task in a job, e.g., in the URL
-        https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/jobs/4a90c5ad-7c2f-4b39-9409-55a3a7ad8640/tasks/46599eb5-f9dd-4f50-9569-0cbfe27be200
-        it is the last component of the URL.
+        `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/jobs/4a90c5ad-7c2f-4b39-9409-55a3a7ad8640/tasks/46599eb5-f9dd-4f50-9569-0cbfe27be200`
+        it is the last component of the URL after `tasks`.
       required:
       - type
       type: object
