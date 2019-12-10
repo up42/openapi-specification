@@ -280,6 +280,35 @@ paths:
           content:
             application/json:
               example:
+                error: null
+                data:
+                  - id: bf7d63d3-7ae0-40d3-9415-d1503a351dba
+                    createdAt: '2019-10-29T11:04:03.562Z'
+                    updatedAt: '2019-12-10T17:40:29.839Z'
+                    name: JOB_QUERY_MAX_AOI_SIZE
+                    value: '1000'
+                    range:
+                      min: 1
+                      max: 1000
+                    displayId: bf7d63d3
+                  - id: cca028e6-4f24-4ea0-9564-d82ce80aac7d
+                    createdAt: '2019-10-29T11:04:03.561Z'
+                    updatedAt: '2019-12-10T17:40:29.848Z'
+                    name: MAX_CONCURRENT_JOBS
+                    value: '10'
+                    range:
+                      min: 1
+                      max: 10
+                    displayId: cca028e6
+                  - id: c00d5803-76d7-4259-be17-ac5ae583f5cb
+                    createdAt: '2019-10-29T11:04:03.562Z'
+                    updatedAt: '2019-12-10T17:40:29.852Z'
+                    name: JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
+                    value: '20'
+                    range:
+                      min: 1
+                      max: 20
+                    displayId: c00d5803
                 
         400:
           description: VALIDATION ERROR
@@ -316,6 +345,7 @@ paths:
                   details: null
                 data: null
       deprecated: false
+      
   /projects/{project_id}/workflows:
     get:
       tags:
