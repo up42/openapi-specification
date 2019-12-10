@@ -14,7 +14,108 @@ info:
 
     The authoritative source for the specification is available at
     [github](https://github.com/up42/openapi-specification).
+
+    ## Authentication & Authorization
+
+    Currently the only way to access our API is on a project by
+    project basis. Meaning that the authorization token that is issued
+    upon authentication can only be used in a **specific** project
+    context. 
+
+    It means that a **project key** is **always** needed. Therefore you
+    always need to create a project **through the UI**.
+
+    The example below uses an example project. So the specific values of
+    things like project key and project ID are given for illustration
+    purposes only. In your case the values will be different.
+
+    **Note**: Please be aware that the project ID and the project key
+    allows anyone to manipulate your project (account) so be careful and
+    do not share it around. Someone might find it and besides messing with
+    your project it will make you incur costs and thus reduce the
+    currently available credits in our platform.
+
+    ### Requirements
+
+     1. [cURL](https://curl.haxx.se).
+     2. [jq](https://stedolan.github.io/jq/).
+
+    [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) is the shell
+    used in this guide.
+
+    Additionally you can use
+    [jwt-cli](https://github.com/mike-engel/jwt-cli) to decode
+    the token that is based on [JSON Web Token
+    (JWT)](https://en.wikipedia.org/wiki/JSON_Web_Token) and uses
+    a [HMAC](https://en.wikipedia.org/wiki/HMAC) based on
+    [SHA-512](https://en.wikipedia.org/wiki/SHA-2) for signature encryption.
     
+    #### Authenticating and getting the token
+
+    The authentication uses the project key and the project ID. Both
+    can be found at
+    `https://console.up42.com/projects/<projectID>/settings`, where
+    `<projectID>` is the project ID of a specific project.
+
+    The project API key will be displayed there, e.g.,
+    `1dJeCIVx.ex0eU6GRlXSYEo72Icw9pqud7NFbxuHqaJz`.
+
+    In the authentication process the project ID functions as a
+    username and the project key as a password in a
+    [Basic Authentication](https://en.wikipedia.org/wiki/Basic_access_authentication)
+    setup.
+
+    Given a project ID `1b0015e3-cc4f-4da6-9761-fba74ba57f67` and a
+    project key `1dJeCIVx.ex0eU6GRlXSYEo72Icw9pqud7NFbxuHqaJz` let us
+    create two shell variables to hold each.
+
+    > PROJ=1b0015e3-cc4f-4da6-9761-fba74ba57f67
+    >  PKEY=1dJeCIVx.ex0eU6GRlXSYEo72Icw9pqud7NFbxuHqaJz   
+
+    Now we issue the cURL request:
+      
+        PTOKEN=$(curl -sX POST https://$PROJ:$PKEY@api.up42.com/oauth/token \
+                   -H 'Content-Type: application/x-www-form-urlencoded' \
+                   -d 'grant_type=client_credentials' | jq -r '.data.accessToken')
+
+    Which returns:
+
+        > echo $PTOKEN
+        eyJ0eXAiOiJKV1QiLCJraWQiOiIxIiwidG9rZW5fdHlwZSI6IkFDQ0VTUyIsImFsZyI6IlJTNTEyIn0.eyJpc3MiOiJiYWNrZW5kLWNvcmUiLCJqdGkiOiI5ZGJiMDg4OS1mMGE0LTQ5MzUtOGU2MC1jOWUyNDYyZjhlMDYiLCJpYXQiOjE1NzU5NzQ3NzYsInN1YiI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImF1ZCI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImV4cCI6MTU3NTk3NTA3NiwiYXV0aG9yaXRpZXMiOlsiVklFV19QUk9KRUNUIiwiUlVOX0pPQiJdfQ.Nyv8oeAEbC5YVE-ZrIP4BxQhp6LsiO2nP_v5da9LIp_H1AeIFAXVOEatKQCJO7s2nUDl5bednIgCW4AGyTsWbMaEtZ0d5kcNCgfg-YTzqReUVB-8PRJ0ef6Gh-D-Is6_sGg3b4WiEMZFTdfN4eLxHFcbXUiUDRi-4EhM__aihrXonrHVSFNhJ2bHqpX-3oFQwCIVmU1eCusdkaR2aRcpWj4iQQxWrx9hJ7-5W0Es3ilzfFB3pDQ0l5IoTXIjNyWipcdtwVuoV8eDoe0kIwdgGDrSgpgzPTb7JjqNMreKtlcSIqkBNitHqALFoCoj_OP9YKuBxY8_cossn85p7d3pa2KSoV3Clc9O5jgWve59PCMXVrn2kX2_CjmhJQkrW0sGZEKexm3Em-UpPrdVwb8T4yXw8DIK8H6rWK5XsVac1hQ5nXeBiaAG2GN4wpkGKk8AVBBe3QP10X4uJ0q1W3IrzeVE6arFxky6xLdqvJ8OFZY0l6dnR8i1plQlrlugGsTM3dYKpO_1LAHQfwWOh80eNblsz6qRPq18Kx5U5z1FfJo5g7muPwSqut1NqM6zC86WNTcmmzpHuoZCpR4wVhrWJ5k_NvO6abUjT-dUumJoQ7Rh0Y5szOGaldKmdWR5wuNjo7OVfNV3gwrkxxySjqvc_3LiD45fXlupjgfFYdtD6hA
+
+    We can now decode the token with the `jwt` CLI:
+
+        > jwt decode -j -A HS512 $PTOKEN | jq '.'
+    ```js
+        {
+           "header": {
+              "typ": "JWT",
+              "alg": "RS512",
+              "kid": "1"
+           },
+           "payload": {
+              "aud": "1b0015e3-cc4f-4da6-9761-fba74ba57f67",
+              "authorities": [
+                 "VIEW_PROJECT",
+                 "RUN_JOB"
+             ],
+             "exp": 1575975076,
+             "iat": 1575974776,
+             "iss": "backend-core",
+             "jti": "9dbb0889-f0a4-4935-8e60-c9e2462f8e06",
+             "sub": "1b0015e3-cc4f-4da6-9761-fba74ba57f67"
+           }
+         }
+     ```
+     Looking at the `"exp"`and `"iat"`fields, respectively EXPiration
+     and Issued At Time in [UNIX time](https://en.wikipedia.org/wiki/Unix_time)
+     we see that the difference is 300 seconds,
+     meaning that a token is valid for 5 minutes.
+
+     The authentication and authorization mechanism are specified below
+     in detail.
+
+     Be aware also that all API requests are made over HTTPS.
   contact:
     name: API support
     email: support@up42.com
@@ -26,6 +127,60 @@ servers:
 - url: https://api.up42.com
   variables: {}
 paths:
+  /oauth/token:
+    post:
+      tags:
+      - token
+      summary: Get the bearer token 
+      description: >
+        Get the bearer token necessary for all API requests.
+      security:
+        - basicAuth: []
+      parameters:
+      - name: Authorization
+        in: header
+        description: >-
+          The `username:password` string Base64 encoded. `username` is
+          the project ID and password is the project key.
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: >
+            MWIwMDE1ZTMtY2M0Zi00ZGE2LTk3NjEtZmJhNzRiYTU3ZjY3OjFkSmVDSVZ4LmV4MGVVNkdSbFhTWUVvNzJJY3c5cHF1ZDdORmJ4dUhxYUp6Cg==
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/x-www-form-urlencoded
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+              example: grant_type=client_credentials
+      responses:
+        200:
+          description: OK.
+          headers: {}
+          content:
+            application/json:
+              example: 
+                data:
+                  accessToken: eyJ0eXAiOiJKV1QiLCJraWQiOiIxIiwidG9rZW5fdHlwZSI6IkFDQ0VTUyIsImFsZyI6IlJTNTEyIn0.eyJpc3MiOiJiYWNrZW5kLWNvcmUiLCJqdGkiOiI1ODdkMTQ3My05ODU5LTRhMDAtYTUwNS1iZTgwMDUzYmJiMzUiLCJpYXQiOjE1NzU5NzE1ODEsInN1YiI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImF1ZCI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImV4cCI6MTU3NTk3MTg4MSwiYXV0aG9yaXRpZXMiOlsiVklFV19QUk9KRUNUIiwiUlVOX0pPQiJdfQ.hgJkzcokxZQpEc5walhzDqMubBgT_ukmRLd1-mqBHZBv8hMI-7rJaLaA1-ZB5P5CgLvzUyjkeq4gwuXZgmx7Q0nufnI6qC8gxSOEGjfb-sS4wHew7zhPXwNfhuv0CmhMeHpQXyjxdlKxf4cWbhK3PVQkHMCnxvJkw1T7RJ_XolEzRN2g2ocM-hzhLM3UVhzqyeD_qVr1yCjZzs32gsekmPQkW_XmflrSgzl7AhHxQK9psC3h3H6HveT2WmnYqvnb-a3v8FJTCC21S5KCAV1qj-Hlv1vTUDRoQK5TsH4oklvnmqfU0ylmCDPRKihcyUgFvf5wdcebDgbUHHvlz8gEsTaMGEEDmfzXCQwr9e4bgzildOiqzsS2tRf2m1bJAYF-vQ5Yfsv5mt0xauTEaWARAfe5WzoLKQ7Ex3WKuLnzZlzKZ-BKQuP31rk-O4F-784RM60nto6aQh1Yl3uUVSTRMQ4SwsOO3RWvIP52CqeM4EMXjfLZDsOOuXIlmiVRXSRFi7yY0uC-5DKMkkeBw-RXh2wGMF7axB2Wo7fbcpr2vszkdbGKg-kw2bF_oHd_20riBAUBV0kWC3XGYkDOunUPLDqFhtDQRS-GlL8aDoYX8pe19qiUzLXX3QWLb95FkNyz6w8MjMEMkatSfLhrYX7PHNI3VAa59IB0NdRCi4arDig
+                error: null
+                access_token: eyJ0eXAiOiJKV1QiLCJraWQiOiIxIiwidG9rZW5fdHlwZSI6IkFDQ0VTUyIsImFsZyI6IlJTNTEyIn0.eyJpc3MiOiJiYWNrZW5kLWNvcmUiLCJqdGkiOiI1ODdkMTQ3My05ODU5LTRhMDAtYTUwNS1iZTgwMDUzYmJiMzUiLCJpYXQiOjE1NzU5NzE1ODEsInN1YiI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImF1ZCI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImV4cCI6MTU3NTk3MTg4MSwiYXV0aG9yaXRpZXMiOlsiVklFV19QUk9KRUNUIiwiUlVOX0pPQiJdfQ.hgJkzcokxZQpEc5walhzDqMubBgT_ukmRLd1-mqBHZBv8hMI-7rJaLaA1-ZB5P5CgLvzUyjkeq4gwuXZgmx7Q0nufnI6qC8gxSOEGjfb-sS4wHew7zhPXwNfhuv0CmhMeHpQXyjxdlKxf4cWbhK3PVQkHMCnxvJkw1T7RJ_XolEzRN2g2ocM-hzhLM3UVhzqyeD_qVr1yCjZzs32gsekmPQkW_XmflrSgzl7AhHxQK9psC3h3H6HveT2WmnYqvnb-a3v8FJTCC21S5KCAV1qj-Hlv1vTUDRoQK5TsH4oklvnmqfU0ylmCDPRKihcyUgFvf5wdcebDgbUHHvlz8gEsTaMGEEDmfzXCQwr9e4bgzildOiqzsS2tRf2m1bJAYF-vQ5Yfsv5mt0xauTEaWARAfe5WzoLKQ7Ex3WKuLnzZlzKZ-BKQuP31rk-O4F-784RM60nto6aQh1Yl3uUVSTRMQ4SwsOO3RWvIP52CqeM4EMXjfLZDsOOuXIlmiVRXSRFi7yY0uC-5DKMkkeBw-RXh2wGMF7axB2Wo7fbcpr2vszkdbGKg-kw2bF_oHd_20riBAUBV0kWC3XGYkDOunUPLDqFhtDQRS-GlL8aDoYX8pe19qiUzLXX3QWLb95FkNyz6w8MjMEMkatSfLhrYX7PHNI3VAa59IB0NdRCi4arDig
+                refresh_token: null
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                null
+      deprecated: false
   /projects/{project_id}/settings:
     get:
       tags:
@@ -1344,6 +1499,9 @@ components:
           type: string
       example: 46599eb5-f9dd-4f50-9569-0cbfe27be200
   securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
     httpBearer:
       type: http
       scheme: bearer
