@@ -268,11 +268,11 @@ paths:
               description: ''
             example:
             - name: JOB_QUERY_MAX_AOI_SIZE
-              value: 100
+              value: 1000
             - name: MAX_CONCURRENT_JOBS
-              value: 100
+              value: 10
             - name: JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
-              value: 100
+              value: 20
         required: true
       responses:
         200:
@@ -280,6 +280,17 @@ paths:
           content:
             application/json:
               example:
+                
+        400:
+          description: VALIDATION ERROR
+          content:
+            application/json:
+              example:
+                error:
+                  code: VALIDATION_ERROR
+                  message: 'Field "list[1].value" must be in range Range[1,10], got 100'
+                  details: null
+                data: null                
         401:
           description: Unauthorized
           content:
