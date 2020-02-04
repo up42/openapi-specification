@@ -122,7 +122,7 @@ info:
   version: '0.9'
   license:
     name: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-    url: href="http://creativecommons.org/licenses/by-nc-nd/4.0/
+    url: http://creativecommons.org/licenses/by-nc-nd/4.0/
 servers:
 - url: https://api.up42.com
   variables: {}
@@ -249,7 +249,12 @@ paths:
       tags:
       - projects
       summary: Update project settings
-      description: 'TODO: Add Description'
+      description: >-
+        Update the settings for a specific project. This includes the
+        comprises the following parameters:
+          + `MAX_CONCURRENT_JOBS`: maximum number of concurrent jobs.
+          + `JOB_QUERY_MAX_AOI_SIZE`: maximum number of results in a data request.
+          + `JOB_QUERY_MAX_AOI_SIZE`: maximum size in square km of theArea of Interest (AOI).
       operationId: UpdateProjectSettings
       parameters:
       - name: project_id
@@ -309,7 +314,6 @@ paths:
                       min: 1
                       max: 20
                     displayId: c00d5803
-                
         400:
           description: VALIDATION ERROR
           content:
@@ -459,7 +463,10 @@ paths:
       tags:
       - workflows
       summary: Create Workflow
-      description: 'TODO: Add Description'
+      description: >-
+        Create a workflow. This call creates the workflow
+        resource. Then via PUT requests we populate the workflow with
+        tasks.
       operationId: CreateWorkflow
       parameters:
       - name: project_id
@@ -468,7 +475,7 @@ paths:
         schema: 
           $ref: '#/components/schemas/ProjectID'
       requestBody:
-        description: ''
+        description: Payload for workflow creation.
         content:
           application/json:
             schema:
@@ -489,7 +496,7 @@ paths:
       tags:
       - workflows
       summary: Get a specific workflow
-      description: 'TODO: Add Description'
+      description: Outputs a specific workflow given as workflow ID.
       operationId: GetWorkflow
       parameters:
       - name: Content-Type
@@ -1127,19 +1134,35 @@ paths:
 components:
   schemas:
     UpdateprojectsettingsRequest:
-      title: UpdateprojectsettingsRequest
-      required:
-      - name
-      - value
-      type: object
       properties:
-        name:
-          type: string
-        value:
-          type: string
-      example:
-        name: JOB_QUERY_MAX_AOI_SIZE
-        value: 100
+        MAX_CONCURRENT_JOBS:
+          description: ''
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: integer
+        JOB_QUERY_MAX_AOI_SIZE:
+          description: ''
+          type: object
+          properties:
+            name:
+              type: string
+            value:
+              type: integer
+        JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE:
+          description: ''
+          properties:
+            name:
+              type: string
+            value:
+              type: integer
+      required:
+      - MAX_CONCURRENT_JOBS
+      - JOB_QUERY_MAX_AOI_SIZE
+      - JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
+      title: UpdateprojectsettingsRequest
     CreateWorkflowRequest:
       title: CreateWorkflowRequest
       required:
