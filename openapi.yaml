@@ -187,8 +187,9 @@ paths:
       - projects
       summary: Get project settings
       description: >
-        Get the project settings, i.e., the limits for AOI size in square km
-        and number of simultanesouly running jobs for this project. 
+        Get the project settings, i.e., the limits for AOI size in square km,
+        the number of simultanesouly running jobs for this project and
+        the maximum number of results to be returned.
       operationId: GetProjectSettings
       parameters:
       - name: project_id
@@ -1136,28 +1137,42 @@ components:
     UpdateprojectsettingsRequest:
       properties:
         MAX_CONCURRENT_JOBS:
-          description: ''
+          description: The maximum number of concurrent jobs for a
+            given project. This parameter is important if you are
+            running parallel jobs as part of your overall workflow,
+            e.g., splitting a large AOI over multiple jobs, each with
+            a part of the AOI.
           type: object
           properties:
             name:
               type: string
+              example: MAX_CONCURRENT_JOBS
             value:
               type: integer
+              example: 10
         JOB_QUERY_MAX_AOI_SIZE:
-          description: ''
+          description: The maximum AOI size in square km. To be able
+             to set it to a value up to 1000 you need to add a payment
+             method to your account.
           type: object
           properties:
             name:
               type: string
+              example: JOB_QUERY_MAX_AOI_SIZE
             value:
               type: integer
+              example: 250
         JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE:
-          description: ''
+          description: The maximum number of results (images) to be
+            returned. This applies mostly to data blocks where you
+            query for data.
           properties:
             name:
               type: string
+              example: JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
             value:
               type: integer
+              example: 25
       required:
       - MAX_CONCURRENT_JOBS
       - JOB_QUERY_MAX_AOI_SIZE
