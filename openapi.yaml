@@ -184,7 +184,7 @@ paths:
   /projects/{project_id}/settings:
     get:
       tags:
-      - projects
+      - project-settings
       summary: Get project settings
       description: >
         Get the project settings, i.e., the limits for AOI size in square km,
@@ -248,7 +248,7 @@ paths:
       deprecated: false
     put:
       tags:
-      - projects
+      - project-settings
       summary: Update project settings
       description: >-
         Update the settings for a specific project. This includes the
@@ -353,7 +353,7 @@ paths:
     get:
       tags:
       - workflows
-      summary: Get all project specific workflows.
+      summary: Get all project specific workflows
       description: >
         Get all the workflows for a given project.
       operationId: GetWorkflows
@@ -635,6 +635,28 @@ paths:
             application/json:
               example:
       deprecated: false
+    delete:
+      tags:
+      - workflows
+      summary: Delete Workflow
+      description: >-
+        Delete a workflow from a given project.
+      operationId: DeleteWorkflow
+      parameters:
+      - name: project_id
+        in: path
+        required: true
+        schema: 
+          $ref: '#/components/schemas/ProjectID'
+      - name: workflow_id
+        in: path
+        required: true
+        schema: 
+          $ref: '#/components/schemas/WorkflowID'  
+      responses:
+        204:
+          description: No Content
+      deprecated: false      
   /projects/{project_id}/workflows/{workflow_id}/tasks:
     get:
       tags:
@@ -2004,9 +2026,11 @@ components:
 security:
 - httpBearer: []
 tags:
-- name: projects
-- name: workflows
+- name: token
 - name: jobs
-- name: job-outputs
+- name: job-outputs  
+- name: workflows
 - name: blocks
+- name: block-validation  
+- name: project-settings  
   description: ''
