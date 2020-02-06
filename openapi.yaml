@@ -1352,6 +1352,8 @@ paths:
           description: OK
           headers: {}
           $ref: '#/components/responses/PublicBlocks'
+        401:
+          $ref: '#/components/responses/Unauthorized'
       deprecated: false
       servers:
       - url: http://example.com
@@ -1375,11 +1377,14 @@ paths:
           example: application/json
       - name: block_id
         in: path
-        description: ''
+        description: >-
+          The ID of the block being listed in detail.
         required: true
         style: simple
         schema:
           type: string
+        example:
+          045019bb-06fc-4fa1-b703-318725b4d8af
       responses:
         200:
           description: ''
@@ -1524,6 +1529,18 @@ paths:
                         value: 'https://metadata.up42.com/OneAtlas/SPOT_AOI/SPOT_6-7_Namibia_Namib_Desert.jpg'
                         type: IMAGE
                   machineName: LARGE
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              example:
+                data: null
+                error:
+                  code: 404
+                  message: Block not found with id 045019bb-06fc-4fa1-b703-318725b4d8ef
+                  details: null
       deprecated: false
       servers:
       - url: http://example.com
