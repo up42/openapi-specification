@@ -471,21 +471,21 @@ paths:
       - name: project_id
         in: path
         required: true
-        schema: 
+        schema:
           $ref: '#/components/schemas/ProjectID'
       requestBody:
         description: Payload for workflow creation.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateWorkflowRequest'
+              $ref: '#/components/schemas/WorkflowRequest'
             example:
               name: My brand new workflow with Pléaides and Pansharpening.
               description: >-
                 This workflow is for getting Pansharpened images with
                 all the bands from Pléiades.
               id: null
-              tasks: [] 
+              tasks: []
         required: true
       responses:
         200:
@@ -605,25 +605,25 @@ paths:
       - workflows
       summary: Update Workflow
       description: >-
-        Updates a workflow with an updated task.
+        Updates a workflow
       operationId: UpdateWorkflow
       parameters:
       - name: project_id
         in: path
         required: true
-        schema: 
+        schema:
           $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
         required: true
-        schema: 
-          $ref: '#/components/schemas/WorkflowID'  
+        schema:
+          $ref: '#/components/schemas/WorkflowID'
       requestBody:
         description: ''
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateWorkflowRequest'
+              $ref: '#/components/schemas/WorkflowRequest'
             example:
               name: workflow-test-name
               description: workflow test description
@@ -646,13 +646,13 @@ paths:
       - name: project_id
         in: path
         required: true
-        schema: 
+        schema:
           $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
         required: true
-        schema: 
-          $ref: '#/components/schemas/WorkflowID'  
+        schema:
+          $ref: '#/components/schemas/WorkflowID'
       responses:
         204:
           description: No Content
@@ -663,12 +663,12 @@ paths:
               example:
                 error:
                   code: UNAUTHORIZED
-                  message: > 
-                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T15:42:05Z. Current time: 2019-11-29T16:45:55Z, 
+                  message: >
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T15:42:05Z. Current time: 2019-11-29T16:45:55Z,
                     a difference of 3830764 milliseconds.  Allowed clock skew: 0 milliseconds.
                   details: null
                 data: null
-      deprecated: false      
+      deprecated: false
   /projects/{project_id}/workflows/{workflow_id}/tasks:
     get:
       tags:
@@ -727,7 +727,7 @@ paths:
                       displayName: Sentinel-1 L1C GRD AOI clipped
                       description: |+
                         Provides Sentinel-1 L1C GRD imagery in GeoTIFF format.
-                
+
                       containerUrl: 'registry.up42.com/marketplace/sobloo-s1-grd-aoiclipped:GsEmdQmRPW07k20wBCUcciK2x65oJnJSQDa59DFI'
                       inputCapabilities: []
                       outputCapabilities:
@@ -775,13 +775,13 @@ paths:
                       metadata:
                         overview: |
                           Sentinel-1 L1C GRD AOI clipped provides AOIs of Sentinel-1 (A/B)'s C-band synthetic aperture radar sensor in processing level L-1C Ground Range Detected (GRD).
-                
+
                           This AOI-Clipped block leverages WMTS to produce its output as AOI.
-                
+
                           The Copernicus Sentinel-1 is a Synthetic Aperture Radar (SAR) mission, offering 4 imaging modes with different resolution (down to 5m) and coverage (up to 400m). The mission is composed of a constellation of 2 satellites (1A and 1B) sharing the same orbital plane.
-                
+
                           **Technical information**
-                
+
                           |Feature|Info|
                           |:-|:-|
                           |Archive date / refresh frequency | All products from the previous 12 months / Archives available from mission start (2014) on request |
@@ -789,13 +789,13 @@ paths:
                           |Resolution| **Strip map:** 80 km swath, 5 x 5 m resolution  / **Interferometric Wide Swath:** 250 km swath, 5 x 20 m spatial resolution  / **Extra-Wide Swath:** 400 km swath, 20 x 40 m spatial resolution  / **Wave:** 20 x 20 km, 5 x 5 m spatial resolution|
                           |Processing level|L1C GRD|
                           |Data format| GeoTIFF (AOI-Clipped)|
-                
+
                           **Use cases**
-                
+
                           The Copernicus Sentinel-1 Synthetic Aperture Radar (SAR) instrument is particularly suited for the assessment of land use/ land cover, soil moisture, water content and frost/thaw state. A variety of applications for this sensor data can be envisioned, e.g. ship routing in arctic conditions, agriculture, vegetation and oil spills monitoring.
-                
+
                           **More information**
-                
+
                           For more information about this data, please see the block's documentation page [here](https://docs.up42.com/up42-blocks/data/sobloo-s1-grd.html) or check the [provider website](https://sobloo.eu).
                         termsAndConditionsUrl: 'https://metadata.up42.com/Sobloo/S1-L1C-GRD-AOI-Clipped/Sentinel_Data_Legal_Notice.pdf'
                         blockThumbnailUrl: 'https://metadata.up42.com/Sobloo/S1-L1C-GRD-Full-Scene/0_Sentinel1_Avatar_2.jpg'
@@ -1009,18 +1009,18 @@ paths:
       summary: Create workflow tasks
       description: >-
         Creates the workflow tasks. A task is comprised of
-        a block in a workflow.   
+        a block in a workflow.
       operationId: CreateWorkflowTasks
       parameters:
       - name: project_id
         in: path
         required: true
-        schema: 
+        schema:
           $ref: '#/components/schemas/ProjectID'
       - name: workflow_id
         in: path
         required: true
-        schema: 
+        schema:
           $ref: '#/components/schemas/WorkflowID'
         example:
           23897cdd-f452-4a98-8384-24d1dea5ca4d
@@ -1036,12 +1036,12 @@ paths:
                 The tasks in the workflow. Conmprises  one or more
                 tasks depending on the desired workflow.
             example:
-            - name: task1
-              parentName: 
-              blockName: one-atlas/basemap
-            - name: task2
-              parentName: task1
-              blockName: dabeeo/roof-detection
+            - name: spot_streaming
+              parentName:
+              blockId: 045019bb-06fc-4fa1-b703-318725b4d8af
+            - name: tiling
+              parentName: spot_streaming
+              blockId: 3e146dd6-2b67-4d6e-a422-bb3d973e32ff
         required: true
       responses:
         200:
@@ -1193,7 +1193,7 @@ paths:
       servers:
       - url: http://example.com
         variables: {}
-  /jobs/{job_id}/cancel:
+  /projects/{project_id}/jobs/{job_id}/cancel:
     post:
       tags:
       - jobs
@@ -1291,8 +1291,8 @@ paths:
       - name: project_id
         in: path
         required: true
-        schema: 
-          $ref: '#/components/schemas/ProjectID'    
+        schema:
+          $ref: '#/components/schemas/ProjectID'
       - name: job_id
         in: path
         required: true
@@ -1532,7 +1532,7 @@ paths:
         variables: {}
 components:
   schemas:
-    UpdateprojectsettingsRequest:
+    UpdateProjectSettingsRequest:
       properties:
         MAX_CONCURRENT_JOBS:
           description: The maximum number of concurrent jobs for a
@@ -1576,11 +1576,10 @@ components:
       - JOB_QUERY_MAX_AOI_SIZE
       - JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
       title: UpdateprojectsettingsRequest
-    CreateWorkflowRequest:
-      title: CreateWorkflowRequest
+    WorkflowRequest:
+      title: WorkflowRequest
       required:
       - name
-      - description
       type: object
       properties:
         name:
@@ -1588,39 +1587,23 @@ components:
           description: >-
             The name of the workflow.
           maxLength: 100
-        tasks:
-          description: >
-            A list of objects representing tasks. Since we are just
-            creating the workflow, if given, this parameter must be an empty
-            array `[]`.
-          type: array
-          items:
-            type: object 
-          example: []
-        id:
-          description: >
-            The ID of the workflow since the workflow is just being
-            created it should be set to `null` if given in the request
-            body.
-          type: string
-          example: null
         description:
           type: string
           description: >-
             A description of the workflow. Should be informative.
           example: A workflow for getting pansharpened images from
-            Pléaides with all the available bands.  
+            Pléaides with all the available bands.
       example:
         name: My new workflow with Pléaides and Pansharpening
         description: >
           This workflow uses the Pléaides download block
           and Pansharpening to get high quality
-    CreateworkflowtasksRequest:
+    CreateWorkflowTasksRequest:
       title: CreateWorkflowTasksRequest
       description: >-
         Create one or more tasks in a workflow.
       type: array
-      items: 
+      items:
         required:
         - name
         - parentName
@@ -1645,36 +1628,6 @@ components:
               is the Pléiades download block.
             type: string
             example: defb134b-ca00-4e16-afa0-639c6dc0c5fe
-    UpdateWorkflowRequest:
-      title: UpdateWorkflowRequest
-      description: >-
-        Updating one or more tasks in a workflow.
-      type: array
-      items: 
-        required:
-        - name
-        - parentName
-        - blockId
-        type: object
-        properties:
-          name:
-            description: The name of the task.
-            type: string
-            maxLength: 100
-            example: Replaced Pléiades download for SPOT 6/7
-          parentName:
-            description: >-
-              The name of the parent task. If this is the first or only
-              task then it is null.
-            type: string
-            nullable: true
-            example: null
-          blockId:
-            description: >-
-              The UUID representing the block ID. In this case the block
-              is the SPOT 6/7 download block.
-            type: string
-            example: 63a69b97-1765-474e-b465-0b319b8d3b2d
     CreateandRunJobRequest:
       title: CreateandRunJobRequest
       required:
@@ -1808,12 +1761,12 @@ components:
         parameters:
           bbox:
             type: string
-            default: 
+            default:
           intersects:
             type: geometry
           time:
             type: dateRange
-            default: 
+            default:
           limit:
             type: number
             default: 1
@@ -2034,15 +1987,15 @@ components:
     httpBearer:
       type: http
       scheme: bearer
-      bearerFormat: JWT  
+      bearerFormat: JWT
 security:
 - httpBearer: []
 tags:
 - name: token
 - name: jobs
-- name: job-outputs  
+- name: job-outputs
 - name: workflows
 - name: blocks
-- name: block-validation  
-- name: project-settings  
+- name: block-validation
+- name: project-settings
   description: ''
