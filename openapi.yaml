@@ -656,6 +656,18 @@ paths:
       responses:
         204:
           description: No Content
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: > 
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T15:42:05Z. Current time: 2019-11-29T16:45:55Z, 
+                    a difference of 3830764 milliseconds.  Allowed clock skew: 0 milliseconds.
+                  details: null
+                data: null
       deprecated: false      
   /projects/{project_id}/workflows/{workflow_id}/tasks:
     get:
