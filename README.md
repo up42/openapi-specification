@@ -7,7 +7,7 @@ This repository contains the [UP42](https://up42.com)
 
 The specification follows the API development. It reflects the current
 state of the API. It is a continous work in progress since the API
-will change over time and the specification follows that.
+will change over time and the specification follows it.
 
 ## Creating issues and contributing
 
@@ -24,5 +24,5 @@ commiter.
 
 ## License
 
-Since this is documentation the license is 
+Since this is documentation the license is the
 [Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License](http://creativecommons.org/licenses/by-nc-nd/4.0/).
