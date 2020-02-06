@@ -259,7 +259,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/UpdateprojectsettingsRequest'
+                $ref: '#/components/schemas/UpdateProjectSettingsRequest'
               description: ''
             example:
             - name: JOB_QUERY_MAX_AOI_SIZE
@@ -445,7 +445,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateWorkflowRequest'
+              $ref: '#/components/schemas/WorkflowRequest'
             example:
               name: My brand new workflow with Pléaides and Pansharpening.
               description: >-
@@ -544,7 +544,7 @@ paths:
       - workflows
       summary: Update Workflow
       description: >-
-        Updates a workflow with an updated task.
+        Updates a workflow.
       operationId: UpdateWorkflow
       parameters:
       - name: project_id
@@ -562,7 +562,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateWorkflowRequest'
+              $ref: '#/components/schemas/WorkflowRequest'
             example:
               name: workflow-test-name
               description: workflow test description
@@ -972,22 +972,22 @@ paths:
               items:
                 $ref: '#/components/schemas/CreateworkflowtasksRequest'
               description: >-
-                The tasks in the workflow. Conmprises  one or more
+                The tasks in the workflow. Conmprises one or more
                 tasks depending on the desired workflow.
             example:
-            - name: task1
+            - name: spot-streaming
               parentName:
-              blockName: one-atlas/basemap
-            - name: task2
-              parentName: task1
-              blockName: dabeeo/roof-detection
+              blockId: 045019bb-06fc-4fa1-b703-318725b4d8af
+            - name: tiling
+              parentName: spot-streaming
+              blockId: 3e146dd6-2b67-4d6e-a422-bb3d973e32ff
         required: true
       responses:
         200:
           description: ''
           headers: {}
         401:
-          $ref: '#/components/responses/Unauthorized'          
+          $ref: '#/components/responses/Unauthorized'
       deprecated: false
       servers:
       - url: http://example.com
@@ -1549,7 +1549,7 @@ paths:
         variables: {}
 components:
   schemas:
-    UpdateprojectsettingsRequest:
+    UpdateProjectSettingsRequest:
       properties:
         MAX_CONCURRENT_JOBS:
           description: The maximum number of concurrent jobs for a
@@ -1593,8 +1593,8 @@ components:
       - JOB_QUERY_MAX_AOI_SIZE
       - JOB_QUERY_LIMIT_PARAMETER_MAX_VALUE
       title: UpdateprojectsettingsRequest
-    CreateWorkflowRequest:
-      title: CreateWorkflowRequest
+    WorkflowRequest:
+      title: WorkflowRequest
       required:
       - name
       - description
@@ -1662,36 +1662,6 @@ components:
               is the Pléiades download block.
             type: string
             example: defb134b-ca00-4e16-afa0-639c6dc0c5fe
-    UpdateWorkflowRequest:
-      title: UpdateWorkflowRequest
-      description: >-
-        Updating one or more tasks in a workflow.
-      type: array
-      items:
-        required:
-        - name
-        - parentName
-        - blockId
-        type: object
-        properties:
-          name:
-            description: The name of the task.
-            type: string
-            maxLength: 100
-            example: Replaced Pléiades download for SPOT 6/7
-          parentName:
-            description: >-
-              The name of the parent task. If this is the first or only
-              task then it is null.
-            type: string
-            nullable: true
-            example: null
-          blockId:
-            description: >-
-              The UUID representing the block ID. In this case the block
-              is the SPOT 6/7 download block.
-            type: string
-            example: 63a69b97-1765-474e-b465-0b319b8d3b2d
     CreateandRunJobRequest:
       title: CreateandRunJobRequest
       required:
@@ -3795,8 +3765,8 @@ components:
             error:
             code: 415
             message: Content type 'application/xml;charset=UTF-8' not supported
-            details: null  
-                
+            details: null
+
   securitySchemes:
     basicAuth:
       type: http
