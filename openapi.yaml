@@ -1564,6 +1564,29 @@ paths:
       servers:
       - url: http://example.com
         variables: {}
+  /validate-schema/block:
+    post:
+      tags:
+      - block-validation
+      summary: Validate Blocks Manifest
+      description: 'TODO: Add Description'
+      operationId: ValidateBlocksManifest
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateBlocksManifestRequest'
+        required: true
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+      servers:
+      - url: http://example.com
+        variables: {}
 components:
   schemas:
     UpdateProjectSettingsRequest:
@@ -1798,40 +1821,55 @@ components:
           $ref: '#/components/schemas/OutputCapabilities'
       example:
         _up42_specification_version: 1
-        name: sentinel2-aoiclipped
+        name: sentinel-1-grd-fullscene
         type: data
         tags:
-        - Sentinel
-        - Sentinel-2
-        - MSI
-        - Imagery
-        - L2A
-        - BOA
-        display_name: Sentinel-2 Level 2 (BOA) AOI clipped
-        description: This block provides Sentinel-2 imagery clipped to all webmercator tiles intersecting a given bounding box or AOI on a given zoom level. The part of the image that does not intersect with these tiles will be black. The block outputs a single GeoTIFF file and will store the AOI within the output feature geometry.
+          - Airbus
+          - Sobloo
+          - Sentinel
+          - C-band
+          - SAR
+          - Copernicus
+          - global
+          - high resolution
+          - environment
+        display_name: Sentinel-1 L1C GRD Full Scenes
+        description: Provides Sentinel-1 L1C GRD Full Scenes data in SAFE format.
         parameters:
+          ids:
+            type: array
+            default: null
           bbox:
-            type: string
-            default:
+            type: array
+            default: null
           intersects:
+            type: geometry
+          contains:
             type: geometry
           time:
             type: dateRange
-            default:
+            default: '2018-01-01T00:00:00+00:00/2020-12-31T23:59:59+00:00'
+          time_series:
+            type: array
+            default: null
           limit:
-            type: number
+            type: integer
+            minimum: 1
             default: 1
-          zoom_level:
-            type: number
-            default: 17
+          acquisition_mode:
+            type: string
+            default: null
+          orbit_direction:
+            type: string
+            default: null
         machine:
-          type: large
-        internal:
+          type: small
+        optional_features:
+          quicklook_supported: true
           dry_run_supported: true
-        input_capabilities:
-          custom.this.is.my.capability: {}
+        input_capabilities: {}
         output_capabilities:
-          up42.data.aoiclipped: {}
+          up42.data.scene.sentinel1_l1c_grd: {}
     Parameters:
       title: Parameters
       required:
