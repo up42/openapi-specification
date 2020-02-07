@@ -1349,8 +1349,6 @@ paths:
           example: application/json
       responses:
         200:
-          description: OK
-          headers: {}
           $ref: '#/components/responses/PublicBlocks'
         401:
           $ref: '#/components/responses/Unauthorized'
@@ -1556,9 +1554,6 @@ paths:
       security: []
       responses:
         200:
-          description: OK
-          headers: {}
-          content:
           $ref: '#/components/responses/PublicBlocks'
       deprecated: false
       servers:
@@ -1569,11 +1564,13 @@ paths:
       tags:
       - block-validation
       summary: Validate Blocks Manifest
-      description: 'TODO: Add Description'
+      description: >-
+        Validate a block manifest  accoridng to the JSON schema definition.
       operationId: ValidateBlocksManifest
       parameters: []
+      security: []
       requestBody:
-        description: ''
+        description: Block Manifest to be validated.
         content:
           application/json:
             schema:
@@ -1581,8 +1578,27 @@ paths:
         required: true
       responses:
         200:
-          description: ''
+          description: OK
           headers: {}
+          content:
+            application/json:
+              example:
+                error: null
+                data:
+                  valid: true
+                  errors: []
+        400:
+          description: Incorrect machine type specified.
+          content:
+            application/json:
+              example:
+                data: null
+                error:
+                  code: 400
+                  message: 'validateBlockSchema.block: Invalid JSON for ''BLOCK'' schema version ''1'': ''#/machine/type: #: only 1 subschema matches out of 2'''
+                  details: null
+        415:
+          $ref: '#/components/responses/IncorrectMediaType'
       deprecated: false
       servers:
       - url: http://example.com
@@ -2071,8 +2087,7 @@ components:
       example: 46599eb5-f9dd-4f50-9569-0cbfe27be200
   responses:
     PublicBlocks:
-      description: >-
-        All blocks that are public are also in the marketplace.
+      description: OK
       content:
         application/json:
             example:
