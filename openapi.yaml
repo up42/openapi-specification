@@ -657,6 +657,17 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/WorkflowTasksCreated'
+        400:
+          description: Missing request body.
+          headers: {}
+          content:
+            application/json:
+              example:
+                data: null
+                error:
+                  code: 400
+                  message: 'Required request body is missing: public com.up42.core.controller.dto.Response<java.util.List<com.up42.core.controller.dto.WorkflowTaskDto>> com.up42.core.controller.WorkflowTaskController.setWorkflowTasks(java.util.UUID,java.util.UUID,java.util.List<com.up42.core.controller.dto.WorkflowTaskRequest>) throws com.up42.core.controller.exception.InvalidWorkflowException,com.up42.core.controller.exception.WorkflowNotFoundException'
+                  details: null
         401:
           $ref: '#/components/responses/Unauthorized'
       deprecated: false
@@ -687,6 +698,19 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/ListAllJobs'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          description: Not Found
+          headers: {}
+          content:
+            application/json:
+              example:
+                data: null
+                error:
+                  code: 404
+                  message: Project not found for id 403c5d50-240a-45c3-b1f1-10d684d285ef and userId d39fe05a-400c-44f6-b770-86990f64b004
+                  details: null
       deprecated: false
   /projects/{project_id}/workflows/{workflow_id}/jobs:
     post:
@@ -751,6 +775,10 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/ListSingleJob'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}/tasks:
     get:
@@ -786,6 +814,10 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/ListSingleJobTasks'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
   /jobs/{job_id}/cancel:
     post:
@@ -4319,6 +4351,17 @@ components:
                   version: 1.0.0-public
                   metadata: null
                   machineName: null
+    JobNotFound:
+      description: Not Found
+      headers: {}
+      content:
+        application/json:
+          example:
+            data: null
+            error:
+              code: 404
+              message: Job not found for id 00f35ab9-59d7-4a30-ae73-e1eab7b08d0e and projectId 403c5d50-240a-45c3-b1f1-10d684d285ee and userId d39fe05a-400c-44f6-b770-86990f64b004
+              details: null
   securitySchemes:
     basicAuth:
       type: http
