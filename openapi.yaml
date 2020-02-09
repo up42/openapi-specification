@@ -665,7 +665,8 @@ paths:
       tags:
       - jobs
       summary: Get Jobs
-      description: 'TODO: Add Description'
+      description: >-
+         Lists all the jobs in a given project.
       operationId: GetJobs
       parameters:
       - name: Content-Type
@@ -681,10 +682,11 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/ProjectID'
+        example:
+          403c5d50-240a-45c3-b1f1-10d684d285ee
       responses:
         200:
-          description: ''
-          headers: {}
+          $ref: '#/components/responses/ListAllJobs'
       deprecated: false
   /projects/{project_id}/workflows/{workflow_id}/jobs:
     post:
@@ -3975,6 +3977,223 @@ components:
                         value: 'https://metadata.up42.com/903f0435-d638-475e-bbe9-53b5664a22a8/Pan_Sharpening_Carousel1576666332905.png'
                         type: IMAGE
                   machineName: LARGE
+    ListAllJobs:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          example:
+            error: null
+            data:
+              - id: 814d6d0b-8bef-4c5f-a61b-9d62b472b865
+                displayId: 814d6d0b
+                createdAt: '2020-01-31T19:50:46.061Z'
+                updatedAt: '2020-01-31T19:52:17.603Z'
+                status: FAILED
+                name: bldg detection
+                startedAt: '2020-01-31T19:50:46Z'
+                finishedAt: '2020-01-31T19:52:17Z'
+                inputs:
+                  'tiling:1':
+                    nodata: null
+                    tile_width: 768
+                    tile_height: 768
+                    match_extents: false
+                    output_prefix: ''
+                    augmentation_factor: 1
+                    discard_empty_tiles: true
+                  'buildingdetection:1': {}
+                  'sobloo-s1-grd-aoiclipped:1':
+                    ids: null
+                    time: '2018-01-01T00:00:00+00:00/2020-12-31T23:59:59+00:00'
+                    limit: 1
+                    intersects:
+                      type: Polygon
+                      coordinates:
+                        - - - -8.882253
+                            - 40.170594
+                          - - -8.872147
+                            - 40.170872
+                          - - -8.870859
+                            - 40.164822
+                          - - -8.887231
+                            - 40.16838
+                          - - -8.890922
+                            - 40.17543
+                          - - -8.882382
+                            - 40.176824
+                          - - -8.882253
+                            - 40.170594
+                    time_series:
+                      - '2019-10-01T00:00:00/2019-11-28T23:59:59'
+                      - '2019-11-29T00:00:00/2019-12-28T23:59:59'
+                    orbit_direction: DESCENDING
+                    acquisition_mode: null
+                mode: DEFAULT
+                workflowId: 20b6cdd2-6d53-40db-ba3a-5ec71ded1c02
+                workflowName: bldg detection
+              - id: 00f35ab9-59d7-4a30-ae73-e1eab7b08d0f
+                displayId: 00f35ab9
+                createdAt: '2020-01-31T19:42:29.679Z'
+                updatedAt: '2020-01-31T19:43:06.635Z'
+                status: SUCCEEDED
+                name: bldg detection test
+                startedAt: '2020-01-31T19:42:29Z'
+                finishedAt: '2020-01-31T19:43:06Z'
+                inputs:
+                  'buildingdetection:1': {}
+                  'sobloo-s1-grd-aoiclipped:1':
+                    ids: null
+                    time: '2018-01-01T00:00:00+00:00/2020-01-31T23:59:59+00:00'
+                    limit: 1
+                    intersects:
+                      type: Polygon
+                      coordinates:
+                        - - - -8.882253
+                            - 40.170594
+                          - - -8.872147
+                            - 40.170872
+                          - - -8.870859
+                            - 40.164822
+                          - - -8.887231
+                            - 40.16838
+                          - - -8.890922
+                            - 40.17543
+                          - - -8.882382
+                            - 40.176824
+                          - - -8.882253
+                            - 40.170594
+                    time_series:
+                      - '2019-10-01T00:00:00/2019-11-02T23:59:59'
+                      - '2019-11-03T00:00:00/2019-12-28T23:59:59'
+                    orbit_direction: DESCENDING
+                    acquisition_mode: null
+                mode: DEFAULT
+                workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
+                workflowName: bldg detection test no tiling
+              - id: 25deb7e9-fe2f-47bb-a069-46c6f099aa68
+                displayId: 25deb7e9
+                createdAt: '2020-01-31T19:42:10.487Z'
+                updatedAt: '2020-01-31T19:42:25.888Z'
+                status: SUCCEEDED
+                name: bldg detection test
+                startedAt: '2020-01-31T19:42:11Z'
+                finishedAt: '2020-01-31T19:42:25Z'
+                inputs:
+                  config:
+                    mode: DRY_RUN
+                  'buildingdetection:1': {}
+                  'sobloo-s1-grd-aoiclipped:1':
+                    ids: null
+                    time: '2018-01-01T00:00:00+00:00/2020-01-31T23:59:59+00:00'
+                    limit: 1
+                    intersects:
+                      type: Polygon
+                      coordinates:
+                        - - - -8.882253
+                            - 40.170594
+                          - - -8.872147
+                            - 40.170872
+                          - - -8.870859
+                            - 40.164822
+                          - - -8.887231
+                            - 40.16838
+                          - - -8.890922
+                            - 40.17543
+                          - - -8.882382
+                            - 40.176824
+                          - - -8.882253
+                            - 40.170594
+                    time_series:
+                      - '2019-10-01T00:00:00/2019-11-02T23:59:59'
+                      - '2019-11-03T00:00:00/2019-12-28T23:59:59'
+                    orbit_direction: DESCENDING
+                    acquisition_mode: null
+                mode: DRY_RUN
+                workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
+                workflowName: bldg detection test no tiling
+              - id: f3d11bd7-b0d2-4f0b-8d63-dc5b0960e040
+                displayId: f3d11bd7
+                createdAt: '2020-01-31T16:45:29.357Z'
+                updatedAt: '2020-01-31T19:39:51.880Z'
+                status: FAILED
+                name: bldg detection test no tiling
+                startedAt: '2020-01-31T16:45:30Z'
+                finishedAt: '2020-01-31T16:45:46Z'
+                inputs:
+                  'buildingdetection:1': {}
+                  'sobloo-s1-grd-aoiclipped:1':
+                    ids: null
+                    time: '2018-01-01T00:00:00+00:00/2020-12-31T23:59:59+00:00'
+                    limit: 1
+                    intersects:
+                      type: Polygon
+                      coordinates:
+                        - - - -8.882253
+                            - 40.170594
+                          - - -8.872147
+                            - 40.170872
+                          - - -8.870859
+                            - 40.164822
+                          - - -8.887231
+                            - 40.16838
+                          - - -8.890922
+                            - 40.17543
+                          - - -8.882382
+                            - 40.176824
+                          - - -8.882253
+                            - 40.170594
+                    time_series:
+                      - '2018-01-01T00:00:00/2018-02-28T23:59:59'
+                      - '2019-01-01T00:00:00/2019-02-28T23:59:59'
+                    orbit_direction: DESCENDING
+                    acquisition_mode: null
+                mode: DEFAULT
+                workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
+                workflowName: bldg detection test no tiling
+              - id: 84b87f02-a962-4ab4-a2e0-b7f4a9a75148
+                displayId: 84b87f02
+                createdAt: '2020-01-31T16:39:10.972Z'
+                updatedAt: '2020-01-31T16:41:32.354Z'
+                status: FAILED
+                name: bldg detection test
+                startedAt: '2020-01-31T16:39:11Z'
+                finishedAt: '2020-01-31T16:41:32Z'
+                inputs:
+                  'tiling:1':
+                    nodata: null
+                    tile_width: 768
+                    tile_height: 768
+                    match_extents: false
+                    output_prefix: ''
+                    augmentation_factor: 1
+                    discard_empty_tiles: true
+                  'buildingdetection:1': {}
+                  'sobloo-s1-grd-aoiclipped:1':
+                    ids: null
+                    time: '2018-01-01T00:00:00+00:00/2020-12-31T23:59:59+00:00'
+                    limit: 1
+                    intersects:
+                      type: Polygon
+                      coordinates:
+                        - - - -8.882888
+                            - 40.173835
+                          - - -8.86349
+                            - 40.173311
+                          - - -8.858169
+                            - 40.150353
+                          - - -8.887351
+                            - 40.169113
+                          - - -8.882888
+                            - 40.173835
+                    time_series:
+                      - '2018-01-01T00:00:00/2018-02-28T23:59:00'
+                      - '2019-01-01T00:00:00/2019-02-28T23:59:00'
+                    orbit_direction: DESCENDING
+                    acquisition_mode: null
+                mode: DEFAULT
+                workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
+                workflowName: bldg detection test no tiling
   securitySchemes:
     basicAuth:
       type: http
@@ -3987,9 +4206,9 @@ security:
 - httpBearer: []
 tags:
 - name: token
+- name: workflows
 - name: jobs
 - name: job-outputs
-- name: workflows
 - name: blocks
 - name: block-validation
 - name: project-settings
