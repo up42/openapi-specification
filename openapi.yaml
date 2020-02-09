@@ -723,7 +723,7 @@ paths:
       tags:
       - jobs
       summary: Get Job
-      description: 'TODO: Add Description'
+      description: Lists a specific job related information.
       operationId: GetJob
       parameters:
       - name: Content-Type
@@ -739,15 +739,18 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/ProjectID'
+        example:
+          403c5d50-240a-45c3-b1f1-10d684d285ee          
       - name: job_id
         in: path
         required: true
         schema:
           $ref: '#/components/schemas/JobID'
+        example:
+          00f35ab9-59d7-4a30-ae73-e1eab7b08d0f
       responses:
         200:
-          description: ''
-          headers: {}
+          $ref: '#/components/responses/ListSingleJob'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}/tasks:
     get:
@@ -4194,6 +4197,52 @@ components:
                 mode: DEFAULT
                 workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
                 workflowName: bldg detection test no tiling
+    ListSingleJob:
+      description: OK
+      content:
+        application/json:
+          example:
+            error: null
+            data:
+              id: 00f35ab9-59d7-4a30-ae73-e1eab7b08d0f
+              displayId: 00f35ab9
+              createdAt: '2020-01-31T19:42:29.679Z'
+              updatedAt: '2020-01-31T19:43:06.635Z'
+              status: SUCCEEDED
+              name: bldg detection test
+              startedAt: '2020-01-31T19:42:29Z'
+              finishedAt: '2020-01-31T19:43:06Z'
+              inputs:
+                'buildingdetection:1': {}
+                'sobloo-s1-grd-aoiclipped:1':
+                  ids: null
+                  time: '2018-01-01T00:00:00+00:00/2020-01-31T23:59:59+00:00'
+                  limit: 1
+                  intersects:
+                    type: Polygon
+                    coordinates:
+                      - - - -8.882253
+                          - 40.170594
+                        - - -8.872147
+                          - 40.170872
+                        - - -8.870859
+                          - 40.164822
+                        - - -8.887231
+                          - 40.16838
+                        - - -8.890922
+                          - 40.17543
+                        - - -8.882382
+                          - 40.176824
+                        - - -8.882253
+                          - 40.170594
+                  time_series:
+                    - '2019-10-01T00:00:00/2019-11-02T23:59:59'
+                    - '2019-11-03T00:00:00/2019-12-28T23:59:59'
+                  orbit_direction: DESCENDING
+                  acquisition_mode: null
+              mode: DEFAULT
+              workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
+              workflowName: bldg detection test no tiling
   securitySchemes:
     basicAuth:
       type: http
