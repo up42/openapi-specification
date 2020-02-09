@@ -740,7 +740,7 @@ paths:
         schema:
           $ref: '#/components/schemas/ProjectID'
         example:
-          403c5d50-240a-45c3-b1f1-10d684d285ee          
+          403c5d50-240a-45c3-b1f1-10d684d285ee
       - name: job_id
         in: path
         required: true
@@ -757,7 +757,8 @@ paths:
       tags:
       - jobs
       summary: Get Job tasks
-      description: 'TODO: Add Description'
+      description: >-
+        Lists all the taks in a specific job.
       operationId: GetJobTasks
       parameters:
       - name: Content-Type
@@ -773,15 +774,18 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/ProjectID'
+        example:
+          403c5d50-240a-45c3-b1f1-10d684d285ee
       - name: job_id
         in: path
         required: true
         schema:
           $ref: '#/components/schemas/JobID'
+        example:
+          00f35ab9-59d7-4a30-ae73-e1eab7b08d0f
       responses:
         200:
-          description: ''
-          headers: {}
+          $ref: '#/components/responses/ListSingleJobTasks'
       deprecated: false
   /jobs/{job_id}/cancel:
     post:
@@ -4243,6 +4247,78 @@ components:
               mode: DEFAULT
               workflowId: 57be5131-ac73-4d20-9f95-c00a934eaf6c
               workflowName: bldg detection test no tiling
+    ListSingleJobTasks:
+      description: OK
+      content:
+        application/json:
+          example:
+            error: null
+            data:
+              - id: 05c2bf15-bd3f-4070-8e77-4e5c2b4a7c2f
+                displayId: 05c2bf15
+                createdAt: '2020-01-31T19:42:29.681Z'
+                updatedAt: '2020-01-31T19:42:48.017Z'
+                name: 'sobloo-s1-grd-aoiclipped:1'
+                status: SUCCEEDED
+                parentsIds: []
+                startedAt: '2020-01-31T19:42:29Z'
+                finishedAt: '2020-01-31T19:42:46Z'
+                block:
+                  id: b1c88381-6df0-4919-a194-5d5b3b1ee2f7
+                  createdAt: null
+                  updatedAt: null
+                  name: sobloo-s1-grd-aoiclipped
+                  displayName: null
+                  description: null
+                  containerUrl: null
+                  inputCapabilities: null
+                  outputCapabilities: null
+                  provider: null
+                  providerWebsite: null
+                  providerLogoUrl: null
+                  tags: null
+                  isPublic: null
+                  isPublicVersion: null
+                  isValid: null
+                  parameters: null
+                  type: DATA
+                  isDryRunSupported: null
+                  version: 1.1.6
+                  metadata: null
+                  machineName: null
+              - id: fe06efad-29c2-410f-adc5-999e195378fa
+                displayId: fe06efad
+                createdAt: '2020-01-31T19:42:29.682Z'
+                updatedAt: '2020-01-31T19:43:01.096Z'
+                name: 'buildingdetection:1'
+                status: SUCCEEDED
+                parentsIds:
+                  - 05c2bf15-bd3f-4070-8e77-4e5c2b4a7c2f
+                startedAt: '2020-01-31T19:42:47Z'
+                finishedAt: '2020-01-31T19:42:59Z'
+                block:
+                  id: 06a81a0f-f5cd-4374-98fb-cf456feea295
+                  createdAt: null
+                  updatedAt: null
+                  name: buildingdetection
+                  displayName: null
+                  description: null
+                  containerUrl: null
+                  inputCapabilities: null
+                  outputCapabilities: null
+                  provider: null
+                  providerWebsite: null
+                  providerLogoUrl: null
+                  tags: null
+                  isPublic: null
+                  isPublicVersion: null
+                  isValid: null
+                  parameters: null
+                  type: PROCESSING
+                  isDryRunSupported: null
+                  version: 1.0.0-public
+                  metadata: null
+                  machineName: null
   securitySchemes:
     basicAuth:
       type: http
