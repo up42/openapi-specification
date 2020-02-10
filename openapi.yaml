@@ -727,11 +727,15 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/ProjectID'
+        example:
+          403c5d50-240a-45c3-b1f1-10d684d285ee
       - name: workflow_id
         in: path
         required: true
         schema:
           $ref: '#/components/schemas/WorkflowID'
+        example:
+          fc88746e-98b0-4fa7-b750-2f96cde0f385
       - name: name
         description: A name for the job.
         in: query
@@ -841,12 +845,13 @@ paths:
         404:
           $ref: '#/components/responses/JobNotFound'
       deprecated: false
-  /jobs/{job_id}/cancel:
+  /projects/{project_id}/jobs/{job_id}/cancel:
     post:
       tags:
       - jobs
       summary: Cancel Job
-      description: 'TODO: Add Description'
+      description: >-
+        Cancel a job that is running or scheduled to run (in pending state).
       operationId: CancelJob
       parameters:
       - name: Content-Type
@@ -857,15 +862,28 @@ paths:
         schema:
           type: string
           example: application/json
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProjectID'
+        example:
+          403c5d50-240a-45c3-b1f1-10d684d285ee
       - name: job_id
         in: path
         required: true
         schema:
           $ref: '#/components/schemas/JobID'
+        example:
+          a53b4d6a-635a-422d-837a-920387cede0e
       responses:
-        200:
-          description: ''
+        204:
+          description: No Content.
           headers: {}
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
       servers:
       - url: http://example.com
@@ -1031,6 +1049,148 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/TaskID'
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/downloads/results:
+    get:
+      tags:
+      - job-outputs
+      summary: Get Job Task Outputs - signed url
+      description: >-
+        Download the results for a specific task.
+      operationId: Get job task outputs
+      parameters:
+      - name: Accept
+        in: header
+        description: Media types accepted in the response.
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProjectID'
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/JobID'
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/TaskID'
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/quicklooks:
+    get:
+      tags:
+      - job-outputs
+      summary: Get Job Task Outputs - list quicklooks
+      description: List all quicklooks available for this task.
+      operationId: Get job task outputs quicklooks
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProjectID'
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/JobID'
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/TaskID'
+      responses:
+        200:
+          description: ''
+          headers: {}
+      deprecated: false
+  /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/quicklooks/{image_name}:
+    get:
+      tags:
+      - job-outputs
+      summary: Get Job Task Outputs - quicklook
+      description: >-
+        Get a specific quicklook image for this task.
+      operationId: Get job task outputs quicklook image
+      parameters:
+      - name: Accept
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: Content-Type
+        in: header
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+          example: text/plain,application/json
+      - name: project_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/ProjectID'
+      - name: job_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/JobID'
+      - name: task_id
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/TaskID'
+      - name: image_name
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The quicklook image name.
+        example:
+          b8c9698b-0c42-47ac-b503-a956bf45b5f2.jpg
       responses:
         200:
           description: ''
