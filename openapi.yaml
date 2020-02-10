@@ -902,7 +902,7 @@ paths:
       parameters:
       - name: Accept
         in: header
-        description: Media types accepted in the response.
+        description: MIME types accepted in the response.
         required: true
         style: simple
         schema:
@@ -1085,7 +1085,7 @@ paths:
       parameters:
       - name: Accept
         in: header
-        description: Media types accepted in the response.
+        description: MIME types accepted in the response.
         required: true
         style: simple
         schema:
@@ -1131,7 +1131,7 @@ paths:
       parameters:
       - name: Accept
         in: header
-        description: ''
+        description: MIME types accepted in the response.
         required: true
         style: simple
         schema:
@@ -1162,10 +1162,20 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/TaskID'
+        example: 31c52821-d5b0-4474-b1bf-06eb24c72ee4
       responses:
         200:
-          description: ''
+          description: >-
+            List of available quicklook images, i.e., low resolution
+            bitmapped images that allow to preview the returned
+            image. Not all tasks generate quicklooks.
           headers: {}
+          content:
+            application/json:
+              example:
+                error: null
+                data:
+                  - 51000727-a4ba-4185-ada9-81b33db52eb2.jpeg
       deprecated: false
   /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/quicklooks/{image_name}:
     get:
@@ -1178,12 +1188,12 @@ paths:
       parameters:
       - name: Accept
         in: header
-        description: ''
+        description: MIME types accepted in the response.
         required: true
         style: simple
         schema:
           type: string
-          example: text/plain,application/json
+          example: image/jpg,image/png,image/webp
       - name: Content-Type
         in: header
         description: ''
@@ -1191,7 +1201,7 @@ paths:
         style: simple
         schema:
           type: string
-          example: text/plain,application/json
+          example: image/jpg,image/png,image/webp
       - name: project_id
         in: path
         required: true
@@ -1208,6 +1218,7 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/TaskID'
+        example: 31c52821-d5b0-4474-b1bf-06eb24c72ee4
       - name: image_name
         in: path
         required: true
@@ -1215,11 +1226,23 @@ paths:
           type: string
           description: The quicklook image name.
         example:
-          b8c9698b-0c42-47ac-b503-a956bf45b5f2.jpg
+          51000727-a4ba-4185-ada9-81b33db52eb2.jpeg
       responses:
         200:
-          description: ''
+          description: >- 
+            Image file with the quicklooks, i.e., low resolution
+            bitmapped image that allows to preview the result. Not all
+            tasks generate quicklooks.
           headers: {}
+          content:
+            image/jpg:
+              schema:
+                type: string
+                format: binary
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
   /blocks:
     get:
