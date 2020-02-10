@@ -717,7 +717,9 @@ paths:
       tags:
       - jobs
       summary: Create and Run Job
-      description: 'TODO: Add Description'
+      description: >-
+        Create and run a job with a specific workflow and input
+        parameters,
       operationId: CreateAndRunJob
       parameters:
       - name: project_id
@@ -730,6 +732,14 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/WorkflowID'
+      - name: name
+        description: A name for the job.
+        in: query
+        schema:
+          type: string
+        example:
+          My+newly+created+job
+        required: false
       requestBody:
         description: ''
         content:
@@ -739,8 +749,20 @@ paths:
         required: true
       responses:
         200:
-          description: ''
+          $ref: '#/components/responses/CreateJobResponse'
+        400:
+          description: Incorrect spcification of tasks.
           headers: {}
+          content:
+            application/json:
+              example:
+                data: null
+                error:
+                  code: 400
+                  message: 'There were additional tasks/queries specified: pansharpen:1, oneatla-pleiades-fullscene:1, There were missing tasks/queries: pansharpening, pleiades-download'
+                  details: null
+        401:
+          $ref: '#/components/responses/Unauthorized'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}:
     get:
@@ -1394,16 +1416,16 @@ components:
     CreateandRunJobRequest:
       title: CreateandRunJobRequest
       required:
-      - oneatlas-spot-aoiclipped:1
-      - tiling:1
+      - pleiades-download
+      - pansharpening
       type: object
       properties:
-        oneatlas-spot-aoiclipped:1:
-          $ref: '#/components/schemas/OneatlasSpotAoiclipped1'
-        tiling:1:
-          $ref: '#/components/schemas/Tiling1'
-    OneatlasSpotAoiclipped1:
-      title: OneatlasSpotAoiclipped1
+        pleiades-download:
+          $ref: '#/components/schemas/PleiadesDownload'
+        pansharpening:
+          $ref: '#/components/schemas/Pansharpening'
+    PleiadesDownload:
+      title: PleiadesDownload
       required:
       - bbox
       - time
@@ -1426,10 +1448,20 @@ components:
         zoom_level:
           type: integer
           format: int32
+        ids:
+          type: array
+          items:
+            type: string
+          nullable: true
+        time_series:
+          type: array
+          items:
+            type: string
+          nullable: true
     Intersects:
       title: Intersects
       required:
-      - type
+      - method
       - coordinates
       type: object
       properties:
@@ -1441,31 +1473,29 @@ components:
             type: array
             items:
               type: number
-    Tiling1:
-      title: Tiling1
+    Pansharpening:
+      title: Pansharpening
       required:
-      - tile_width
-      - tile_height
-      - output_prefix
-      - augmentation_factor
+      - method
+      - include_pan
       type: object
       properties:
-        tile_width:
-          type: integer
-          format: int32
-        tile_height:
-          type: integer
-          format: int32
-        output_prefix:
+        method:
+          description: The method used for pan-sharpening the image.
           type: string
-        augmentation_factor:
-          type: integer
-          format: int32
+          enum:
+            - SFIM
+            - Esri
+            - Brovey
+          default: SFIM
+        include_pan:
+          description: >-
+            Specifies to include or not the panchromatic
+            band in the output or not.
+          type: boolean
       example:
-        tile_width: 768
-        tile_height: 768
-        output_prefix: ''
-        augmentation_factor: 1
+        method: SFIM
+        include_pan: false
     ValidateBlocksManifestRequest:
       title: ValidateBlocksManifestRequest
       required:
@@ -4362,6 +4392,37 @@ components:
               code: 404
               message: Job not found for id 00f35ab9-59d7-4a30-ae73-e1eab7b08d0e and projectId 403c5d50-240a-45c3-b1f1-10d684d285ee and userId d39fe05a-400c-44f6-b770-86990f64b004
               details: null
+    CreateJobResponse:
+      description: OK
+      headers: {}
+      content:
+        application/json:
+          example:
+            error: null
+            data:
+              id: a7956d32-d700-4c9e-82a2-075bcffa5706
+              displayId: a7956d32
+              createdAt: '2020-02-09T23:35:45.281Z'
+              updatedAt: '2020-02-09T23:35:46.071Z'
+              status: NOT_STARTED
+              name: My newly created job
+              startedAt: null
+              finishedAt: null
+              inputs:
+                pansharpening:
+                  method: SFIM
+                  include_pan: false
+                pleiades-download:
+                  ids: null
+                  time: null
+                  limit: 1
+                  order_ids:
+                    - 44c5c936-4738-448e-94b3-65cb9d175afc
+                  intersects: null
+                  time_series: null
+              mode: DEFAULT
+              workflowId: fc88746e-98b0-4fa7-b750-2f96cde0f385
+              workflowName: My brand new workflow with Pléaides and Pansharpening.
   securitySchemes:
     basicAuth:
       type: http
