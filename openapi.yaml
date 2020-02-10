@@ -18,7 +18,7 @@ info:
     If you prefer a turorial approach to using the UP42 API then
     please consult the
     [API walkthrough](https://docs.up42.com/going-further/api-walkthrough.html).
-    
+
     # Understanding authentication and authorization
 
     Currently the only way to access our API is on a project by
