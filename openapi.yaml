@@ -885,9 +885,6 @@ paths:
         404:
           $ref: '#/components/responses/JobNotFound'
       deprecated: false
-      servers:
-      - url: http://example.com
-        variables: {}
   /projects/{project_id}/jobs/{job_id}/outputs/data-json:
     get:
       tags:
@@ -942,7 +939,8 @@ paths:
       summary: Get Job Outputs - signed url
       description: >-
         Downloads the job results tarball URL delivered as a field in
-        the JSON through this call.
+        the JSON through this call. The URL needs to be extracted, is
+        the field `data.url` of the returned JSON.
       operationId: Get job outputs  signed url
       parameters:
       - name: Accept
@@ -973,25 +971,29 @@ paths:
           $ref: '#/components/schemas/JobID'
       responses:
         200:
-          description: ''
-          headers: {}
+          $ref: '#/components/responses/JobOrTaskResultsDownload'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/logs:
     get:
       tags:
       - job-outputs
       summary: Get Job Task Logs
-      description: 'TODO: Add Description'
+      description: >-
+        Get the task logs as a text file.
       operationId: GetJobTaskLogs
       parameters:
       - name: Accept
         in: header
-        description: ''
+        description: MIME type accepted in the response.
         required: true
         style: simple
         schema:
           type: string
-          example: text/plain,application/json
+          example: text/plain
       - name: Content-Type
         in: header
         description: ''
@@ -999,7 +1001,7 @@ paths:
         style: simple
         schema:
           type: string
-          example: text/plain,application/json
+          example: text/plain
       - name: project_id
         in: path
         required: true
@@ -1016,10 +1018,14 @@ paths:
         required: true
         schema:
           $ref: '#/components/schemas/TaskID'
+        example: 31c52821-d5b0-4474-b1bf-06eb24c72ee4
       responses:
         200:
-          description: ''
-          headers: {}
+          $ref: '#/components/responses/TaskLog'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/data-json:
     get:
@@ -1080,7 +1086,9 @@ paths:
       - job-outputs
       summary: Get Job Task Outputs - signed url
       description: >-
-        Download the results for a specific task.
+        Download the results tarball URL for a specific task delivered
+        as a field in the JSON through this call. The URL needs to be
+        extracted, is the field `data.url` of the returned JSON.
       operationId: Get job task outputs
       parameters:
       - name: Accept
@@ -1118,8 +1126,11 @@ paths:
           $ref: '#/components/schemas/TaskID'
       responses:
         200:
-          description: ''
-          headers: {}
+          $ref: '#/components/responses/JobOrTaskResultsDownload'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        404:
+          $ref: '#/components/responses/JobNotFound'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}/tasks/{task_id}/outputs/quicklooks:
     get:
@@ -1229,7 +1240,7 @@ paths:
           51000727-a4ba-4185-ada9-81b33db52eb2.jpeg
       responses:
         200:
-          description: >- 
+          description: >-
             Image file with the quicklooks, i.e., low resolution
             bitmapped image that allows to preview the result. Not all
             tasks generate quicklooks.
@@ -4722,7 +4733,29 @@ components:
                   workspaceId: 0e33eb50-3404-48ad-b835-b0b4b72a5625
                   workspaceName: public
                   workspaceTitle: Public
-                  up42.data.aoiclipped: DS_PHR1A_201809212229505_FR1_PX_E172S44_0811_06547/ce83f8b9-b892-4642-a891-6b682116bdb1_pan.tif
+                  up42.data.aoiclipped:
+                    DS_PHR1A_201809212229505_FR1_PX_E172S44_0811_06547/ce83f8b9-b892-4642-a891-6b682116bdb1_pan.tif
+    JobOrTaskResultsDownload:
+      description: >-
+        JSON that contains the URL to use to fetch the results
+        tarball. The field `data.url` contains the URL.
+      headers: {}
+      content:
+        application/json:
+          example:
+            error: null
+            data:
+              url: 'https://storage.googleapis.com/interstellar-prod-processing-artifacts/07328028-5b68-4d7d-ac3d-f4bbd49ead5b/07328028-5b68-4d7d-ac3d-f4bbd49ead5b-2952012668/output.tgz?GoogleAccessId=prod-application-cluster@interstellar-prod-env.iam.gserviceaccount.com&Expires=1581362145&Signature=fLJhJg2LZTPDe68qOP6ALE9TYGKmUleHW9TJ4VMdyszgdhoA%2FXU6gR%2FkB%2BZzg%2BGWFKAkWm59UtrvbrgKgROzTqcOICDu2cUbyXcSr1tLs2KecTOE7NeyZ5ATO0mKO0QQW0TB8W%2FJu3r7IEkk6SYTrd8X08y5%2BQs8%2BzitSlE2s02y0o6IUf%2B8q8Ju3Q5wMdPsOLiImGJrd8UEmiEXjH1ehIrVnmP2aMJfPCngx%2ByJbMVI%2FMtufNpIAkIw6gRj%2FEaJDpOI4pswj5ZVjZ%2Bev3Ra%2B%2FnIsdY%2BY9CiP0ZitGjLZcXjkcN764u3%2BUmgAm7o%2BKWkoUHrqBGe0Qf%2FB4Jo%2F3DTcA%3D%3D'
+    TaskLog:
+      description: >-
+        Text file containing the log for the task.
+      headers: {}
+      content:
+        text/plain:
+          example:
+            schema:
+              type: file
+              produces: text/plain
   securitySchemes:
     basicAuth:
       type: http
