@@ -749,13 +749,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateandRunJobRequest'
+              $ref: '#/components/schemas/CreateAndRunJobRequest'
         required: true
       responses:
         200:
           $ref: '#/components/responses/CreateJobResponse'
         400:
-          description: Incorrect spcification of tasks.
+          description: Incorrect specification of tasks.
           headers: {}
           content:
             application/json:
@@ -1573,7 +1573,7 @@ components:
               is the Pléiades download block.
             type: string
             example: defb134b-ca00-4e16-afa0-639c6dc0c5fe
-    CreateandRunJobRequest:
+    CreateAndRunJobRequest:
       title: CreateandRunJobRequest
       required:
       - pleiades-download
@@ -1588,9 +1588,10 @@ components:
       title: PleiadesDownload
       required:
       - bbox
+      - intersects
+      - contains
       - time
       - limit
-      - intersects
       - zoom_level
       type: object
       properties:
@@ -1604,21 +1605,27 @@ components:
           type: integer
           format: int32
         intersects:
-          $ref: '#/components/schemas/Intersects'
+          $ref: '#/components/schemas/IntersectsOrContains'
+        contains:
+          $ref: '#/components/schemas/IntersectsOrContains'
         zoom_level:
           type: integer
           format: int32
         ids:
-          type: array
-          items:
-            type: string
-          nullable: true
+          $ref: '#/components/schemas/IdsOrOrderIds'
+        order_ids:
+          $ref: '#/components/schemas/IdsOrOrderIds'
         time_series:
           type: array
           items:
             type: string
           nullable: true
-    Intersects:
+      example:
+        ids:
+          - DS_PHR1A_201809212229135_FR1_PX_E172S44_0811_06543
+        order_ids:
+          - ce83f8b9-b892-4642-a891-6b682116bdb1
+    IntersectsOrContains:
       title: Intersects
       required:
       - method
@@ -1653,9 +1660,23 @@ components:
             Specifies to include or not the panchromatic
             band in the output or not.
           type: boolean
+          default: false
       example:
         method: SFIM
         include_pan: false
+    IdsOrOrderIds:
+      title: IdsOrOrderIds
+      description: >-
+        Image IDs (scene ID) or order IDs if you previously bought the
+        image.
+      type: array
+      items:
+        type: string
+        nullable: true
+        default: null
+      example:
+        ids:
+          - S1B_IW_GRDH_1SDV_20191117T084136_20191117T084201_018965_023C6E_2A28
     ValidateBlocksManifestRequest:
       title: ValidateBlocksManifestRequest
       required:
@@ -1754,6 +1775,7 @@ components:
       required:
       - bbox
       - intersects
+      - contains
       - time
       - limit
       - zoom_level
@@ -1762,13 +1784,15 @@ components:
         bbox:
           $ref: '#/components/schemas/Bbox'
         intersects:
-          $ref: '#/components/schemas/Intersects1'
+          $ref: '#/components/schemas/IntersectsOrContains'
         time:
           $ref: '#/components/schemas/Time'
         limit:
           $ref: '#/components/schemas/Limit'
         zoom_level:
           $ref: '#/components/schemas/ZoomLevel'
+        ids:
+          $ref: '#/components/schemas/IdsOrOrderIds'
       example:
         bbox:
           type: string
@@ -4577,7 +4601,7 @@ components:
                   time: null
                   limit: 1
                   order_ids:
-                    - 44c5c936-4738-448e-94b3-65cb9d175afc
+                    - ce83f8b9-b892-4642-a891-6b682116bdb1
                   intersects: null
                   time_series: null
               mode: DEFAULT
