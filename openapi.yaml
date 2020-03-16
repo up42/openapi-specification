@@ -598,7 +598,11 @@ paths:
     get:
       tags:
         - workflows
-      summary: Get Compatible Blocks for a given point in the workflow
+      summary: Get compatible blocks in a workflow
+      description: >-
+        Validates if a given block added to a workflow is compatible
+        with the other blocks in that workflow. Be it preceeding or
+        following blocks.
       operationId: GetCompatibleBlocks
       parameters:
       - name: project_id
@@ -621,14 +625,14 @@ paths:
           type: string
         description: >-
           The task names which will be the parents of the new task in the
-          workflow. Multiple parents can be provided by repeating the parameter. 
+          workflow. Multiple parents can be provided by repeating the parameter.
       - name: childTaskNames
         in: query
         schema:
           type: string
         description: >-
           The task names which will be the children of the new task in the
-          workflow. Multiple children can be provided by repeating the parameter. 
+          workflow. Multiple children can be provided by repeating the parameter.
       responses:
         200:
           description: OK
