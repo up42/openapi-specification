@@ -594,15 +594,16 @@ paths:
                   message: Workflow not found for id 31f750f9-f2f5-4853-9e9b-c4713fdd68f6 and projectId 5a21eaff-cdaa-48ab-bedf-05454116d16ff and userId 8cd5de7b-82e2-4625-b094-d5392f1cf780
                   details: null
       deprecated: false
-  /projects/{project_id}/workflows/{workflow_id}/compatible_blocks:
+  /projects/{project_id}/workflows/{workflow_id}/compatible-blocks:
     get:
       tags:
         - workflows
       summary: Get compatible blocks in a workflow
       description: >-
         Validates if a given block added to a workflow is compatible
-        with the other blocks in that workflow. Be it preceeding or
-        following blocks.
+        with the other blocks in that workflow. If no parent or child
+        blocks (tasks) are given then all blocks that have empty input
+        capabilities are returned. 
       operationId: GetCompatibleBlocks
       parameters:
       - name: project_id
@@ -623,6 +624,7 @@ paths:
         in: query
         schema:
           type: string
+          example: sobloo-s1-grd-aoiclipped:1
         description: >-
           The task names which will be the parents of the new task in the
           workflow. Multiple parents can be provided by repeating the parameter.
@@ -630,22 +632,13 @@ paths:
         in: query
         schema:
           type: string
+          example: tiling:1
         description: >-
           The task names which will be the children of the new task in the
           workflow. Multiple children can be provided by repeating the parameter.
       responses:
         200:
-          description: OK
-          content:
-            application/json:
-              example:
-                error: null
-                data:
-                  blocks:
-                    - blockId: 7360d1df-0dc7-4662-8223-94a227b9eb78
-                      versionTag: "0.1.2"
-                    - blockId: d358e049-f0fc-4dad-b669-5572acdfc49c
-                      versionTag: "1.0.2"
+          $ref: '#/components/responses/CompatibleBlocksResponse'
         401:
           $ref: '#/components/responses/Unauthorized'
         404:
@@ -4839,6 +4832,34 @@ components:
             schema:
               type: file
               produces: text/plain
+    CompatibleBlocksResponse:
+      description: >-
+        JSON that contains all the blocks that are compatible
+        in between the parent task an the child task.
+      content:
+        application/json:
+          example:
+            error: null
+            data:
+              blocks:
+                - blockId: 4ed70368-d4e1-4462-bef6-14e768049471
+                  name: sharpening
+                  versionTag: 2.0.0
+                - blockId: a5b8b938-6fd6-4bac-92cd-dffd7f3169aa
+                  name: zonal-statistics
+                  versionTag: 2.0.0
+                - blockId: d350aa0b-ac31-4021-bbe6-fd8da366740a
+                  name: tiling
+                  versionTag: 2.0.0
+                - blockId: 295bf286-0748-474f-aa38-c1ac35151204
+                  name: vectorising
+                  versionTag: 2.0.0
+                - blockId: adf21e0a-98bf-41a9-a2cc-a59898a461ba
+                  name: kmeans-clustering
+                  versionTag: 2.0.0
+                - blockId: 18e6772f-cf33-4955-b7e4-61df8a108fd9
+                  name: crs-conversion
+                  versionTag: 2.0.0
   securitySchemes:
     basicAuth:
       type: http
