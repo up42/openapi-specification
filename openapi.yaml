@@ -620,22 +620,31 @@ paths:
           $ref: '#/components/schemas/WorkflowID'
         example:
           20b6cdd2-6d53-40db-ba3a-5ec71ded1c02
-      - name: parentTaskNames
+      - name: parentTaskName
         in: query
         schema:
           type: string
           example: sobloo-s1-grd-aoiclipped:1
         description: >-
-          The task names which will be the parents of the new task in the
-          workflow. Multiple parents can be provided by repeating the parameter.
-      - name: childTaskNames
+          The task name that will be the parents of the new task in the
+          workflow. Multiple parents can be provided by repeating the
+          parameter. Of course multiple parents only applies if the
+          workflow is such that has multiple parents. Currently those
+          type of workflows are not supported.
+      - name: childTaskName
         in: query
         schema:
           type: string
           example: tiling:1
         description: >-
-          The task names which will be the children of the new task in the
-          workflow. Multiple children can be provided by repeating the parameter.
+          The task name that will be the children of the new task in the
+          workflow. Multiple children can be provided by repeating the
+          parameter. Multiple parents apply when the workflow is tree,
+          i.e., a given node in the directed graph representing the
+          workflow has a uniquer path for more than one node. As
+          example you might imagine a workflow where a data block
+          feeds into multiple processing blocks leveraging parallel
+          processing.
       responses:
         200:
           $ref: '#/components/responses/CompatibleBlocksResponse'
@@ -651,6 +660,8 @@ paths:
                   code: 404
                   message: Workflow not found for id 31f750f9-f2f5-4853-9e9b-c4713fdd68f6 and projectId 5a21eaff-cdaa-48ab-bedf-05454116d16ff and userId 8cd5de7b-82e2-4625-b094-d5392f1cf780
                   details: null
+        422:
+          $ref: '#/components/responses/InexistingTaskResponse'                  
   /projects/{project_id}/workflows/{workflow_id}/tasks:
     get:
       tags:
@@ -4860,6 +4871,18 @@ components:
                 - blockId: 18e6772f-cf33-4955-b7e4-61df8a108fd9
                   name: crs-conversion
                   versionTag: 2.0.0
+    InexistingTaskResponse:
+      description: >-
+        The task that was passed as either a parent or child task
+        is not in the workflow.
+      content:
+        application/json:
+          example:
+            data: null
+            error:
+              code: 422
+              message: 'Workflow does not contain tasks: tiling:4'
+              details: null
   securitySchemes:
     basicAuth:
       type: http
