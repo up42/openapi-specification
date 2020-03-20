@@ -832,6 +832,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         403:
           $ref: '#/components/responses/NotEnoughCreditsToRunJob'
+        429:
+          $ref: '#/components/responses/TooManyJobsResponse'
       deprecated: false
     put:
       tags:
@@ -933,6 +935,8 @@ paths:
           $ref: '#/components/responses/Unauthorized'
         403:
           $ref: '#/components/responses/NotEnoughCreditsToRunJob'
+        429:
+          $ref: '#/components/responses/TooManyJobsResponse'
       deprecated: false
   /projects/{project_id}/jobs/{job_id}:
     get:
@@ -5049,6 +5053,19 @@ components:
               mode: DEFAULT
               workflowId: fc88746e-98b0-4fa7-b750-2f96cde0f385
               workflowName: My brand new workflow with Pléaides and Pansharpening.
+    TooManyJobsResponse:
+      description: >-
+        Attempting to launch too many jobs for the same job ID.
+        The maximum number of parallel jobs is defined in the
+        project settings.
+      content:
+        application/json:
+          example:
+           data: null
+           error:
+             code: 429
+             message: Your project has too many non-finished jobs
+             details: null
   securitySchemes:
     basicAuth:
       type: http
