@@ -1482,6 +1482,8 @@ paths:
           headers: {}
           content:
             application/json:
+              schema:
+                  $ref: '#/components/schemas/ResponseListSimpleBlockDto'
               example:
                 error: null
                 data:
