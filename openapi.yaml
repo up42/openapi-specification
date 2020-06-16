@@ -1482,6 +1482,8 @@ paths:
           headers: {}
           content:
             application/json:
+              schema:
+                  $ref: '#/components/schemas/ResponseListSimpleBlockDto'
               example:
                 error: null
                 data:
@@ -2212,11 +2214,280 @@ components:
           description: The new name for the job.
       example:
         name: My newly renamed job
+    ResponseListSimpleBlockDto:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/ErrorResponse'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SimpleBlockDto'
+    SimpleBlockDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayId:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        provider:
+          type: string
+        type:
+          type: string
+          enum:
+          - PROCESSING
+          - DATA
+        metadata:
+          $ref: '#/components/schemas/SimpleBlockMarketplaceMetadataDto'
+        version:
+          type: string
+        isPublic:
+          type: boolean
+        isValid:
+          type: boolean
+        isRestricted:
+          type: boolean
+        isAccessGranted:
+          type: boolean
+        inputCapabilities:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Capability'
+        outputCapabilities:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Capability'
+        tags:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        isPublicVersion:
+          type: boolean
+        manifestVersion:
+          type: integer
+          format: int32
+    SimpleBlockMarketplaceMetadataDto:
+      type: object
+      properties:
+        blockThumbnailUrl:
+          type: string
+        pricingStrategy:
+          $ref: '#/components/schemas/SimplePricingStrategyDto'
+    SimplePricingStrategyDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - SQUARE_KM_INPUT
+          - SQUARE_KM_OUTPUT
+          - MEGABYTE_INPUT
+          - MEGABYTE_OUTPUT
+          - SCENE_INPUT
+          - SCENE_OUTPUT
+          - MEGAPIXEL_INPUT
+          - MEGAPIXEL_OUTPUT
+          - TILE_INPUT
+          - TILE_OUTPUT
+          - DATA_POINT_INPUT
+          - DATA_POINT_OUTPUT
+        credits:
+          type: number
+    BlockDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        name:
+          type: string
+        displayName:
+          type: string
+        description:
+          type: string
+        containerUrl:
+          type: string
+        inputCapabilities:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Capability'
+        outputCapabilities:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Capability'
+        provider:
+          type: string
+        providerWebsite:
+          type: string
+        providerLogoUrl:
+          type: string
+        tags:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+        isPublic:
+          type: boolean
+        isPublicVersion:
+          type: boolean
+        isValid:
+          type: boolean
+        isRestricted:
+          type: boolean
+        isAccessGranted:
+          type: boolean
+        parameters:
+          $ref: string
+        type:
+          type: string
+          enum:
+          - PROCESSING
+          - DATA
+        isDryRunSupported:
+          type: boolean
+        version:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/BlockMarketplaceMetadataDto'
+        machineName:
+          type: string
+          enum:
+          - SMALL
+          - MEDIUM
+          - LARGE
+          - XLARGE
+          - GPU_NVIDIA_TESLA_K80
+        manifestVersion:
+          type: integer
+          format: int32
+        capabilities:
+          $ref: '#/components/schemas/CapabilitiesDto'
+    BlockMarketplaceMetadataDto:
+      type: object
+      properties:
+        overview:
+          type: string
+        termsAndConditionsUrl:
+          type: string
+        blockThumbnailUrl:
+          type: string
+        pricingStrategy:
+          $ref: '#/components/schemas/PricingStrategyDto'
+        blockMarketplaceSampleData:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockMarketplaceSampleDataDto'
+    BlockMarketplaceSampleDataDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayId:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+          - IMAGE
+          - JSON
+          - TEXT
+    CapabilitiesDto:
+      type: object
+      properties:
+        input:
+          type: object
+          additionalProperties:
+            type: object
+        output:
+          type: object
+          additionalProperties:
+            type: object
+    PricingStrategyDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        displayId:
+          type: string
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+        type:
+          type: string
+          enum:
+          - SQUARE_KM_INPUT
+          - SQUARE_KM_OUTPUT
+          - MEGABYTE_INPUT
+          - MEGABYTE_OUTPUT
+          - SCENE_INPUT
+          - SCENE_OUTPUT
+          - MEGAPIXEL_INPUT
+          - MEGAPIXEL_OUTPUT
+          - TILE_INPUT
+          - TILE_OUTPUT
+          - DATA_POINT_INPUT
+          - DATA_POINT_OUTPUT
+        credits:
+          type: number
+    Capability:
+      type: object
+      properties:
+        name:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: object
+
   responses:
     PublicBlocks:
       description: OK
       content:
         application/json:
+            schema:
+                $ref: '#/components/schemas/ResponseListSimpleBlockDto'
             example:
               error: null
               data:
