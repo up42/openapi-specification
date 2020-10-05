@@ -3,7 +3,7 @@
 ## Introduction
 
 This repository contains the [UP42](https://up42.com)
-[OPenAPI](https://swagger.io/specification/) specification.
+[OpenAPI](https://swagger.io/specification/) specification.
 
 The specification follows the API development. It reflects the current
 state of the API. It is a continous work in progress since the API
