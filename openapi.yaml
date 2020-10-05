@@ -57,8 +57,8 @@ info:
     ## Authenticating and getting the token
 
     The authentication uses the project key and the project ID. Both
-    can be found at
-    `https://console.up42.com/projects/<projectID>/settings`, where
+    can be found in the **Developers section** of your project
+    `https://console.up42.com/projects/<projectID>/developers`, where
     `<projectID>` is the project ID of a specific project.
 
     The project API key will be displayed there, e.g.,
