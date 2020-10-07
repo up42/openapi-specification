@@ -1958,6 +1958,32 @@ components:
       example:
         ids:
           - S1B_IW_GRDH_1SDV_20191117T084136_20191117T084201_018965_023C6E_2A28
+    CatalogSearchBody:
+      title: CatalogSearchBody
+      type: object
+      example:
+        datetime: '2019-01-01T00:00:00Z/2019-01-15T23:59:59Z'
+        intersects:
+          type: Polygon
+          coordinates:
+            - - - 13.32113746
+                - 52.73971768
+              - - 13.15981158
+                - 52.2092959
+              - - 13.62204483
+                - 52.15632025
+              - - 13.78859517
+                - 52.68655119
+              - - 13.32113746
+                - 52.73971768
+        sortby:
+          - field: properties.cloudCoverage
+            direction: asc
+        limit: 500
+        query:
+          dataBlock:
+            in:
+              - oneatlas-pleiades-aoiclipped
     ValidateBlocksManifestRequest:
       title: ValidateBlocksManifestRequest
       required:
