@@ -1,0 +1,14 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  creditsUsed:
+    type: integer
+    format: int64
+  machineConsumption:
+    $ref: 'MachineConsumptionDetailsDto.yaml'
+  blockConsumption:
+    $ref: 'BlockConsumptionDetailsDto.yaml'
+  displayId:
+    type: string

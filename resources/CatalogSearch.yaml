@@ -1,0 +1,41 @@
+post:
+  tags:
+  - catalog
+  summary: Search in the catalog
+  description: Execute a search in the UP42 catalog given the input parameters from the request body.
+  operationId: CatalogSearch
+  parameters:
+  - name: Content-Type
+    in: header
+    description: 'The access token for identifying the next items to retrieve. Contains a base64-encoded string, which has to be retrieved from the server first.'
+    required: true
+    style: simple
+    schema:
+      type: string
+      example: application/json
+  requestBody:
+    description: Request body containing the input parameters used for the catalog search - interval, geometry, cloud cover, number of images, satellite sensors, processing level.
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CatalogSearchBody.yaml'
+    required: true
+  responses:
+    '200':
+      $ref: '../responses/CatalogSearchResult.yaml'
+    '400':
+      description: Validation failed for argument
+      content:
+        application/json:
+          example:
+            error:
+              code: INVALID_ARGUMENT
+              message: >
+                Validation failed for argument [0] in public com.up42.catalog.controller.StacSearchController$StacResponse com.up42.catalog.controller.StacSearchController.search(com.up42.catalog.controller.dto.SearchRequestDto,java.lang.String): [Field error in object 'searchRequestDto' on field 'limit': rejected value [600]; codes [Max.searchRequestDto.limit,Max.limit,Max.java.lang.Integer,Max]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [searchRequestDto.limit,limit]; arguments []; default message [limit],500]; default message [must be less than or equal to 500]]
+              details: null
+            data: null
+    '401':
+      $ref: '../responses/Unauthorized.yaml'
+    '422':
+      $ref: '../responses/InvalidQueryValue.yaml'
+  deprecated: false

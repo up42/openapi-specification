@@ -1,0 +1,41 @@
+required:
+  - createdAt
+  - createdBy
+  - dataProvider
+  - id
+  - status
+  - updatedAt
+  - updatedBy
+  - workspaceId
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  userId:
+    type: string
+    format: uuid
+  workspaceId:
+    type: string
+    format: uuid
+  dataProvider:
+    type: string
+  status:
+    type: string
+    enum:
+      - PLACED
+      - FAILED
+      - FULFILLED
+      - BEING_FULFILLED
+      - FAILED_PERMANENTLY
+  createdAt:
+    type: string
+    format: date-time
+  updatedAt:
+    type: string
+    format: date-time
+  assets:
+    type: array
+    items:
+      type: string
+      format: uuid

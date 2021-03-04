@@ -1,0 +1,31 @@
+get:
+  tags:
+    - credit-history
+  description: Display the credits consumed for a given workflow.
+  operationId: getCreditsSpentOnWorkflow
+  parameters:
+    - name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: workflow_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: account_id
+      in: query
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ResponseCreditsSpentDtoObject.yaml'

@@ -1,0 +1,12 @@
+title: WorkflowID
+description: >
+  The workflow ID is the UUID for a specific workflow, e.g., in the URL
+  `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/workflows/b16f2676-1420-4146-b000-529b9ee2b724`.
+  It is the component of the URL after `workflows`.
+required:
+- type
+type: object
+properties:
+  type:
+    type: string
+example: b16f2676-1420-4146-b000-529b9ee2b724

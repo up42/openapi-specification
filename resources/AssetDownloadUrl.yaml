@@ -1,0 +1,33 @@
+get:
+  tags:
+    - asset
+  summary: 'Sign a URL that can be used to download an asset from the Storage'
+  operationId: downloadAssetUnderWorkspace
+  parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: asset_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: Download URL
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/SignUrlAssetResponse.yaml'
+    '401':
+      $ref: '../responses/Unauthorized.yaml'
+    '404':
+      description: An error occurred
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yaml'

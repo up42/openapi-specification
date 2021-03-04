@@ -1,0 +1,13 @@
+type: object
+properties:
+  quantity:
+    type: integer
+  unit:
+    type: string
+    enum:
+      - SQUARE_METERS
+      - BYTES
+      - SCENES
+      - PIXELS
+      - TILES
+      - DATA_POINTS

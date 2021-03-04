@@ -1,0 +1,12 @@
+get:
+  tags:
+    - credit-history
+  description: Display the overall credits available in your account.
+  operationId: getCreditBalance
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ResponseBalanceDtoObject.yaml'

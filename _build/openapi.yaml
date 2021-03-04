@@ -1,0 +1,1365 @@
+openapi: 3.0.0
+info:
+  title: UP42 API
+  version: '0.9'
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+    url: 'http://creativecommons.org/licenses/by-nc-nd/4.0/'
+  description: |
+    # Introduction
+    The UP42 API specification is a work under development where updates and new endpoints are added as needed. If there is anything that you would like to do with our API but it is not 
+    listed here, please contact the [support team](mailto:support@up42.com).
+
+    Please note that all API requests are made over HTTPS.
+
+    The source code of the specification is available on
+    [GitHub](https://github.com/up42/openapi-specification).
+
+    Alternatively, we recommend reading the step-by-step instructions from the [API walkthrough](https://docs.up42.com/going-further/api-walkthrough.html).
+
+    ## Project credentials
+
+    Currently, accessing the UP42 API is on a project by project basis. The authorization token is 
+    generated based on a **Project ID** and **Project API Key** that are found in the section 
+    **Developers** on the [console](https://console.up42.com/). This token can only be used for a specific project.
+
+    **Note**: We advise to safely store the Project ID and Project API Key and never share them with other users, because these credentials allow anyone to access your project and consume the UP42 credits associated with your account.
+  contact:
+    name: UP42 Team
+    email: support@up42.com
+    url: 'https://up42.com/'
+servers:
+  - url: 'https://api.up42.com'
+    variables: {}
+paths:
+  /oauth/token:
+    post:
+      tags:
+        - token
+      summary: Generate the bearer token based on project credentials
+      description: |
+        To generate the bearer token necessary for performing the API requests, you need the Project ID (username) and Project API Key (password). The bearer token expires after 5 minutes.
+      parameters:
+        - name: Authorization
+          in: header
+          description: '`username:password` Base64-encoded string.'
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: |
+              MWIwMDE1ZTMtY2M0Zi00ZGE2LTk3NjEtZmJhNzRiYTU3ZjY3OjFkSmVDSVZ4LmV4MGVVNkdSbFhTWUVvNzJJY3c5cHF1ZDdORmJ4dUhxYUp6Cg==
+        - name: Content-Type
+          in: header
+          description: ''
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/x-www-form-urlencoded
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: string
+              example: grant_type=client_credentials
+      responses:
+        '200':
+          description: Return an encrypted access token.
+          headers: {}
+          content:
+            application/json:
+              example:
+                data:
+                  accessToken: eyJ0eXAiOiJKV1QiLCJraWQiOiIxIiwidG9rZW5fdHlwZSI6IkFDQ0VTUyIsImFsZyI6IlJTNTEyIn0.eyJpc3MiOiJiYWNrZW5kLWNvcmUiLCJqdGkiOiI1ODdkMTQ3My05ODU5LTRhMDAtYTUwNS1iZTgwMDUzYmJiMzUiLCJpYXQiOjE1NzU5NzE1ODEsInN1YiI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImF1ZCI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImV4cCI6MTU3NTk3MTg4MSwiYXV0aG9yaXRpZXMiOlsiVklFV19QUk9KRUNUIiwiUlVOX0pPQiJdfQ.hgJkzcokxZQpEc5walhzDqMubBgT_ukmRLd1-mqBHZBv8hMI-7rJaLaA1-ZB5P5CgLvzUyjkeq4gwuXZgmx7Q0nufnI6qC8gxSOEGjfb-sS4wHew7zhPXwNfhuv0CmhMeHpQXyjxdlKxf4cWbhK3PVQkHMCnxvJkw1T7RJ_XolEzRN2g2ocM-hzhLM3UVhzqyeD_qVr1yCjZzs32gsekmPQkW_XmflrSgzl7AhHxQK9psC3h3H6HveT2WmnYqvnb-a3v8FJTCC21S5KCAV1qj-Hlv1vTUDRoQK5TsH4oklvnmqfU0ylmCDPRKihcyUgFvf5wdcebDgbUHHvlz8gEsTaMGEEDmfzXCQwr9e4bgzildOiqzsS2tRf2m1bJAYF-vQ5Yfsv5mt0xauTEaWARAfe5WzoLKQ7Ex3WKuLnzZlzKZ-BKQuP31rk-O4F-784RM60nto6aQh1Yl3uUVSTRMQ4SwsOO3RWvIP52CqeM4EMXjfLZDsOOuXIlmiVRXSRFi7yY0uC-5DKMkkeBw-RXh2wGMF7axB2Wo7fbcpr2vszkdbGKg-kw2bF_oHd_20riBAUBV0kWC3XGYkDOunUPLDqFhtDQRS-GlL8aDoYX8pe19qiUzLXX3QWLb95FkNyz6w8MjMEMkatSfLhrYX7PHNI3VAa59IB0NdRCi4arDig
+                error: null
+                access_token: eyJ0eXAiOiJKV1QiLCJraWQiOiIxIiwidG9rZW5fdHlwZSI6IkFDQ0VTUyIsImFsZyI6IlJTNTEyIn0.eyJpc3MiOiJiYWNrZW5kLWNvcmUiLCJqdGkiOiI1ODdkMTQ3My05ODU5LTRhMDAtYTUwNS1iZTgwMDUzYmJiMzUiLCJpYXQiOjE1NzU5NzE1ODEsInN1YiI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImF1ZCI6IjFiMDAxNWUzLWNjNGYtNGRhNi05NzYxLWZiYTc0YmE1N2Y2NyIsImV4cCI6MTU3NTk3MTg4MSwiYXV0aG9yaXRpZXMiOlsiVklFV19QUk9KRUNUIiwiUlVOX0pPQiJdfQ.hgJkzcokxZQpEc5walhzDqMubBgT_ukmRLd1-mqBHZBv8hMI-7rJaLaA1-ZB5P5CgLvzUyjkeq4gwuXZgmx7Q0nufnI6qC8gxSOEGjfb-sS4wHew7zhPXwNfhuv0CmhMeHpQXyjxdlKxf4cWbhK3PVQkHMCnxvJkw1T7RJ_XolEzRN2g2ocM-hzhLM3UVhzqyeD_qVr1yCjZzs32gsekmPQkW_XmflrSgzl7AhHxQK9psC3h3H6HveT2WmnYqvnb-a3v8FJTCC21S5KCAV1qj-Hlv1vTUDRoQK5TsH4oklvnmqfU0ylmCDPRKihcyUgFvf5wdcebDgbUHHvlz8gEsTaMGEEDmfzXCQwr9e4bgzildOiqzsS2tRf2m1bJAYF-vQ5Yfsv5mt0xauTEaWARAfe5WzoLKQ7Ex3WKuLnzZlzKZ-BKQuP31rk-O4F-784RM60nto6aQh1Yl3uUVSTRMQ4SwsOO3RWvIP52CqeM4EMXjfLZDsOOuXIlmiVRXSRFi7yY0uC-5DKMkkeBw-RXh2wGMF7axB2Wo7fbcpr2vszkdbGKg-kw2bF_oHd_20riBAUBV0kWC3XGYkDOunUPLDqFhtDQRS-GlL8aDoYX8pe19qiUzLXX3QWLb95FkNyz6w8MjMEMkatSfLhrYX7PHNI3VAa59IB0NdRCi4arDig
+                refresh_token: null
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example: null
+      deprecated: false
+  /accounts/me/credits/balance:
+    get:
+      tags:
+        - credit-history
+      description: Display the overall credits available in your account.
+      operationId: getCreditBalance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        format: int32
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties:
+                          balance:
+                            type: integer
+  /accounts/me/credits/history:
+    get:
+      tags:
+        - credit-history
+      description: Display the overall credits consumed in your account.
+      operationId: getHistory
+      parameters:
+        - name: account_id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: pageRequest
+          in: query
+          required: true
+          schema:
+            type: object
+            properties:
+              sort:
+                type: object
+                properties:
+                  sorted:
+                    type: boolean
+                  unsorted:
+                    type: boolean
+                  empty:
+                    type: boolean
+              pageNumber:
+                type: integer
+                format: int32
+              pageSize:
+                type: integer
+                format: int32
+              paged:
+                type: boolean
+              unpaged:
+                type: boolean
+              offset:
+                type: integer
+                format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        format: int32
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties:
+                          totalPages:
+                            type: integer
+                            format: int32
+                          totalElements:
+                            type: integer
+                            format: int64
+                          size:
+                            type: integer
+                            format: int32
+                          content:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                  enum:
+                                    - JOB_TASK
+                                    - CREDIT_PURCHASE
+                                    - TASKING
+                                    - ORDER
+                                    - MANUAL
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                createdBy:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                    type:
+                                      type: string
+                                      enum:
+                                        - INTERNAL
+                                        - ADMIN
+                                        - API_KEY
+                                        - USER
+                                delta:
+                                  type: integer
+                                  format: int64
+                                details:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      format: uuid
+                                    description:
+                                      type: string
+                                    consumption:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          format: uuid
+                                        userId:
+                                          type: string
+                                          format: uuid
+                                        workspaceId:
+                                          type: string
+                                          format: uuid
+                                        createdAt:
+                                          type: string
+                                          format: date-time
+                                        accountId:
+                                          type: string
+                                          format: uuid
+                                        creditsUsed:
+                                          type: integer
+                                          format: int32
+                                    allocation:
+                                      type: object
+                                      properties:
+                                        allocationState:
+                                          type: string
+                                          enum:
+                                            - PENDING
+                                            - SUCCEEDED
+                                            - FAILED
+                                            - AWAIT_COMPLIANCE
+                                            - HOLD
+                                        expirationDate:
+                                          type: string
+                                          format: date-time
+                          number:
+                            type: integer
+                            format: int32
+                          sort:
+                            $ref: '#/paths/~1accounts~1me~1credits~1history/get/parameters/3/schema/properties/sort'
+                          first:
+                            type: boolean
+                          numberOfElements:
+                            type: integer
+                            format: int32
+                          pageable:
+                            $ref: '#/paths/~1accounts~1me~1credits~1history/get/parameters/3/schema'
+                          last:
+                            type: boolean
+                          empty:
+                            type: boolean
+  '/projects/{project_id}/workflows/{workflow_id}/credits':
+    get:
+      tags:
+        - credit-history
+      description: Display the credits consumed for a given workflow.
+      operationId: getCreditsSpentOnWorkflow
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: account_id
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        format: int32
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        properties:
+                          creditsSpent:
+                            type: integer
+  '/projects/{project_id}/workflows/{workflow_id}/compatible-blocks':
+    get:
+      tags:
+        - workflows
+      summary: Get compatible blocks in a workflow
+      description: 'Validates if a block added to a workflow is compatible with the other blocks of that workflow. If no parent or child blocks (workflow tasks) are given, then all blocks that have empty input capabilities are returned.'
+      operationId: GetCompatibleBlocks
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            title: ProjectID
+            description: |
+              The project ID is the string that appears in the URL when in the console, e.g., `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67`. It is the component of the URL after `projects`.
+            required:
+              - type
+            type: object
+            properties:
+              type:
+                type: string
+            example: 1b0015e3-cc4f-4da6-9761-fba74ba57f67
+        - name: workflow_id
+          in: path
+          required: true
+          schema:
+            title: WorkflowID
+            description: |
+              The workflow ID is the UUID for a specific workflow, e.g., in the URL `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67/workflows/b16f2676-1420-4146-b000-529b9ee2b724`. It is the component of the URL after `workflows`.
+            required:
+              - type
+            type: object
+            properties:
+              type:
+                type: string
+            example: b16f2676-1420-4146-b000-529b9ee2b724
+        - name: parentTaskName
+          in: query
+          schema:
+            type: string
+            example: 'sobloo-s1-grd-aoiclipped:1'
+          description: The first workflow task that will be the parent of the next task added in the workflow. Adding multiple parents is currently not possible.
+        - name: childTaskName
+          in: query
+          schema:
+            type: string
+            example: 'tiling:1'
+          description: 'The workflow task that will be the child of the previous task from the workflow. Multiple children can be provided by repeating the parameter. Adding multiple children is possible when the workflow is a tree, i.e., a given node in the directed graph representing the workflow has a unique path  for more than one node. Example: a workflow where a data block feeds into multiple processing blocks, leveraging parallel processing.'
+      responses:
+        '200':
+          description: JSON that contains all the blocks that are compatible between the parent task and the child task.
+          content:
+            application/json:
+              example:
+                error: null
+                data:
+                  blocks:
+                    - blockId: 4ed70368-d4e1-4462-bef6-14e768049471
+                      name: sharpening
+                      versionTag: 2.0.0
+                    - blockId: a5b8b938-6fd6-4bac-92cd-dffd7f3169aa
+                      name: zonal-statistics
+                      versionTag: 2.0.0
+                    - blockId: d350aa0b-ac31-4021-bbe6-fd8da366740a
+                      name: tiling
+                      versionTag: 2.0.0
+                    - blockId: 295bf286-0748-474f-aa38-c1ac35151204
+                      name: vectorising
+                      versionTag: 2.0.0
+                    - blockId: adf21e0a-98bf-41a9-a2cc-a59898a461ba
+                      name: kmeans-clustering
+                      versionTag: 2.0.0
+                    - blockId: 18e6772f-cf33-4955-b7e4-61df8a108fd9
+                      name: crs-conversion
+                      versionTag: 2.0.0
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                error:
+                  code: RESOURCE_NOT_FOUND
+                  message: |
+                    Workflow not found for id b16f2676-1420-4146-b000-529b9ee2b724 and projectId 1b0015e3-cc4f-4da6-9761-fba74ba57f67 and userId 8cd5de7b-82e2-4625-b094-d5392f1cf780. details: null data: null
+        '422':
+          description: The task that was passed as either a parent or child task is not in the workflow.
+          content:
+            application/json:
+              example:
+                data: null
+                error:
+                  code: 422
+                  message: 'Workflow does not contain tasks: tiling:4'
+                  details: null
+  '/projects/{project_id}/jobs/{job_id}/credits':
+    get:
+      tags:
+        - credit-history
+      description: Display the credits consumed for a given job.
+      operationId: getCreditUsageForJob
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      projectId:
+                        type: string
+                        format: uuid
+                      projectDisplayId:
+                        type: string
+                      jobId:
+                        type: string
+                        format: uuid
+                      jobDisplayId:
+                        type: string
+                      creditsUsed:
+                        type: integer
+                        format: int64
+                      tasks:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            creditsUsed:
+                              type: integer
+                              format: int64
+                            machineConsumption:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                userId:
+                                  type: string
+                                  format: uuid
+                                workspaceId:
+                                  type: string
+                                  format: uuid
+                                accountId:
+                                  type: string
+                                  format: uuid
+                                creditsUsed:
+                                  type: integer
+                                  format: int32
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                jobRun:
+                                  $ref: '#/paths/~1projects~1%7Bproject_id%7D~1jobs~1%7Bjob_id%7D~1credits/get/responses/200/content/application~1json/schema/properties/data/properties/tasks/items/properties/blockConsumption/properties/jobRun'
+                                machineConsumption:
+                                  $ref: '#/paths/~1projects~1%7Bproject_id%7D~1jobs~1%7Bjob_id%7D~1estimate/get/responses/200/content/application~1json/schema/properties/error/properties/details/additionalProperties/properties/machineConsumption'
+                            blockConsumption:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                userId:
+                                  type: string
+                                  format: uuid
+                                workspaceId:
+                                  type: string
+                                  format: uuid
+                                accountId:
+                                  type: string
+                                  format: uuid
+                                creditsUsed:
+                                  type: integer
+                                  format: int32
+                                createdAt:
+                                  type: string
+                                  format: date-time
+                                jobRun:
+                                  type: object
+                                  properties:
+                                    projectId:
+                                      type: string
+                                      format: uuid
+                                    projectName:
+                                      type: string
+                                    workflowId:
+                                      type: string
+                                      format: uuid
+                                    workflowName:
+                                      type: string
+                                    blockId:
+                                      type: string
+                                      format: uuid
+                                    blockName:
+                                      type: string
+                                    blockVersion:
+                                      type: string
+                                    blockDisplayName:
+                                      type: string
+                                    jobId:
+                                      type: string
+                                      format: uuid
+                                    jobName:
+                                      type: string
+                                    jobTaskId:
+                                      type: string
+                                      format: uuid
+                                    machineName:
+                                      type: string
+                                blockConsumption:
+                                  type: object
+                                  properties:
+                                    quantity:
+                                      type: integer
+                                    unit:
+                                      type: string
+                                      enum:
+                                        - SQUARE_METERS
+                                        - BYTES
+                                        - SCENES
+                                        - PIXELS
+                                        - TILES
+                                        - DATA_POINTS
+                            displayId:
+                              type: string
+                  error:
+                    $ref: '#/paths/~1projects~1%7Bproject_id%7D~1estimate~1job/post/responses/200/content/application~1json/schema/properties/error'
+  '/projects/{project_id}/estimate/job':
+    post:
+      tags:
+        - estimation
+      summary: Estimate the costs in advance
+      description: Estimate the costs before running a job
+      operationId: estimate
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: object
+                  properties:
+                    tasks:
+                      type: array
+                      items:
+                        required:
+                          - name
+                          - parentName
+                          - blockId
+                          - blockVersionTag
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            maxLength: 100
+                            example: 'oneatlas-pleiades-fullscene:1'
+                          parentName:
+                            type: string
+                            nullable: true
+                            example: null
+                          blockId:
+                            type: string
+                            example: defb134b-ca00-4e16-afa0-639c6dc0c5fe
+                          blockVersionTag:
+                            type: string
+                            example: 2.1.12
+                    inputs:
+                      type: object
+                      properties:
+                        pleiades-download:
+                          title: PleiadesDownload
+                          required:
+                            - bbox
+                            - intersects
+                            - contains
+                            - time
+                            - limit
+                            - zoom_level
+                          type: object
+                          properties:
+                            bbox:
+                              type: string
+                              nullable: true
+                            time:
+                              type: string
+                              nullable: true
+                            limit:
+                              type: integer
+                              format: int32
+                            intersects:
+                              $ref: '#/paths/~1projects~1%7Bproject_id%7D~1estimate~1job/post/requestBody/content/application~1json/schema/properties/input/properties/inputs/properties/pleiades-download/properties/contains'
+                            contains:
+                              title: Intersects
+                              required:
+                                - method
+                                - coordinates
+                              type: object
+                              properties:
+                                type:
+                                  type: string
+                                coordinates:
+                                  type: array
+                                  items:
+                                    type: array
+                                    items:
+                                      type: number
+                            zoom_level:
+                              type: integer
+                              format: int32
+                            ids:
+                              title: FullsceneIDorAssetID
+                              description: Image ID (fullscene ID) or asset IDs if you previously purchased the image.
+                              type: array
+                              items:
+                                type: string
+                                nullable: true
+                                default: null
+                              example:
+                                ids:
+                                  - S1B_IW_GRDH_1SDV_20191117T084136_20191117T084201_018965_023C6E_2A28
+                            asset_ids:
+                              $ref: '#/paths/~1projects~1%7Bproject_id%7D~1estimate~1job/post/requestBody/content/application~1json/schema/properties/input/properties/inputs/properties/pleiades-download/properties/ids'
+                            time_series:
+                              type: array
+                              items:
+                                type: string
+                              nullable: true
+                            max_cloud_cover:
+                              type: integer
+                              format: int32
+                          example:
+                            ids: null
+                            asset_ids: null
+                            time: '2018-01-01T00:00:00+00:00/2021-12-31T23:59:59+00:00'
+                            bbox:
+                              - -2.040374
+                              - 48.651271
+                              - -2.035546
+                              - 48.653652
+                            max_cloud_cover: 20
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        format: int32
+                      message:
+                        type: string
+                      details:
+                        type: object
+  '/projects/{project_id}/jobs/{job_id}/estimate':
+    get:
+      tags:
+        - estimation
+      operationId: getEstimation
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: project_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                  error:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                        format: int32
+                      message:
+                        type: string
+                      details:
+                        type: object
+                        additionalProperties:
+                          type: object
+                          properties:
+                            blockConsumption:
+                              type: object
+                              properties:
+                                resources:
+                                  type: object
+                                  properties:
+                                    unit:
+                                      type: string
+                                      enum:
+                                        - SQUARE_KM
+                                        - MEGABYTE
+                                        - SCENE
+                                        - MEGAPIXEL
+                                        - TILE
+                                        - DATA_POINT
+                                        - PIXEL
+                                        - QUANTITY
+                                    min:
+                                      type: number
+                                    max:
+                                      type: number
+                                credit:
+                                  type: object
+                                  properties:
+                                    min:
+                                      type: integer
+                                      format: int32
+                                    max:
+                                      type: integer
+                                      format: int32
+                            machineConsumption:
+                              type: object
+                              properties:
+                                duration:
+                                  type: object
+                                  properties:
+                                    min:
+                                      type: integer
+                                    max:
+                                      type: integer
+                                credit:
+                                  $ref: '#/paths/~1projects~1%7Bproject_id%7D~1jobs~1%7Bjob_id%7D~1estimate/get/responses/200/content/application~1json/schema/properties/error/properties/details/additionalProperties/properties/blockConsumption/properties/credit'
+  /catalog/stac/search:
+    post:
+      tags:
+        - catalog
+      summary: Search in the catalog
+      description: Execute a search in the UP42 catalog given the input parameters from the request body.
+      operationId: CatalogSearch
+      parameters:
+        - name: Content-Type
+          in: header
+          description: 'The access token for identifying the next items to retrieve. Contains a base64-encoded string, which has to be retrieved from the server first.'
+          required: true
+          style: simple
+          schema:
+            type: string
+            example: application/json
+      requestBody:
+        description: 'Request body containing the input parameters used for the catalog search - interval, geometry, cloud cover, number of images, satellite sensors, processing level.'
+        content:
+          application/json:
+            schema:
+              title: CatalogSearchBody
+              type: object
+              example:
+                datetime: '2019-01-01T00:00:00Z/2019-01-15T23:59:59Z'
+                intersects:
+                  type: Polygon
+                  coordinates:
+                    - - - 13.32113746
+                        - 52.73971768
+                      - - 13.15981158
+                        - 52.2092959
+                      - - 13.62204483
+                        - 52.15632025
+                      - - 13.78859517
+                        - 52.68655119
+                      - - 13.32113746
+                        - 52.73971768
+                  limit: 500
+                  query:
+                    cloudCoverage:
+                      lte: 20
+                    processingLevel:
+                      in:
+                        - ALBUM
+                        - SENSOR
+                    dataBlock:
+                      in:
+                        - oneatlas-pleiades-aoiclipped
+                        - oneatlas-pleiades-fullscene
+                        - oneatlas-spot-aoiclipped
+                        - oneatlas-spot-fullscene
+        required: true
+      responses:
+        '200':
+          description: Result of the catalog search
+          headers: {}
+          content:
+            application/json:
+              example:
+                type: FeatureCollection
+                features:
+                  - type: Feature
+                    bbox:
+                      - 172.61705
+                      - -43.836509
+                      - 172.728202
+                      - -43.798937
+                    geometry:
+                      type: Polygon
+                      coordinates:
+                        - - - 172.728202
+                            - -43.836509
+                          - - 172.61705
+                            - -43.836509
+                          - - 172.61705
+                            - -43.798937
+                          - - 172.728202
+                            - -43.798937
+                          - - 172.728202
+                            - -43.836509
+                    properties:
+                      id: 20782479-ba92-49cc-a256-028a4b304060
+                      acquisitionDate: '2019-01-15T22:35:17Z'
+                      constellation: PHR
+                      providerName: oneatlas
+                      blockNames:
+                        - oneatlas-pleiades-fullscene
+                        - oneatlas-pleiades-aoiclipped
+                      cloudCoverage: 7.89
+                      providerProperties:
+                        - commercialReference: SO19001525
+                        - acquisitionDate: '2019-01-15T22:35:17.68Z'
+                        - qualified: false
+                        - acquisitionStation: SV1
+                        - sourceIdentifier: DS_PHR1A_201901152234406_FR1_PX_E174S38_0821_01783
+                        - archivingCenter: FR1
+                        - lastUpdateDate: '2019-01-29T18:07:27.120095377Z'
+                        - archiveCorrelationId: mmcat_2e0b18f9-58d6-4e66-b9eb-91c71189b25f
+                        - processingDate: '2019-01-17T10:12:12.365'
+                        - parentIdentifier: DS_PHR1A_201901152235176_FR1_PX_E174S38_0821_01787
+                        - azimuthAngle: 179.9705061137936
+                        - title: DS_PHR1A_201901152234406_FR1_PX_E174S38_0821_01783
+                        - resolution: 0.5
+                        - workspaceTitle: Public
+                        - blockNames:
+                            - oneatlas-pleiades-fullscene
+                            - oneatlas-pleiades-aoiclipped
+                        - platform: PHR1A
+                        - productCategory: image
+                        - spectralRange: VISIBLE
+                        - activityId: 802710ad-89d7-4f66-977c-386d593fcfce
+                        - processingLevel: SENSOR
+                        - acquisitionIdentifier: DS_PHR1A_201901152235176_FR1_PX_E174S38_0821_01787
+                        - productionStatus: IN_CLOUD
+                        - sensorType: OPTICAL
+                        - correlationId: 802710ad-89d7-4f66-977c-386d593fcfce
+                        - processorName: DRS-MM V2.6vV2.6
+                        - workspaceName: public
+                        - id: 20782479-ba92-49cc-a256-028a4b304060
+                        - publicationDate: '2019-01-29T18:07:27.120095377Z'
+                        - illuminationElevationAngle: 60.25082389183731
+                        - productType: bundle
+                        - expirationDate: '2020-01-29T18:07:27.120095377Z'
+                        - workspaceId: 0e33eb50-3404-48ad-b835-b0b4b72a5625
+                        - incidenceAngleAcrossTrack: -13.64008456741779
+                        - dataUri: 'gs://tcifg-idp-prod-datastore-data-pilot-nearline/PDWPHR_20190116080000_22_SO19001525-22-01_DS_PHR1A_201901152235176_FR1_PX_E174S38_0821_01787.zip'
+                        - cloudCover: 7.89
+                        - format: image/jp2
+                        - illuminationAzimuthAngle: 65.73507622476698
+                        - incidenceAngleAlongTrack: -9.741554499182111
+                        - incidenceAngle: 16.55486525986212
+                        - processingCenter: FCMUGC
+                        - organisationName: AIRBUS DS GEO
+                        - snowCover: 0
+        '400':
+          description: Validation failed for argument
+          content:
+            application/json:
+              example:
+                error:
+                  code: INVALID_ARGUMENT
+                  message: |
+                    Validation failed for argument [0] in public com.up42.catalog.controller.StacSearchController$StacResponse com.up42.catalog.controller.StacSearchController.search(com.up42.catalog.controller.dto.SearchRequestDto,java.lang.String): [Field error in object 'searchRequestDto' on field 'limit': rejected value [600]; codes [Max.searchRequestDto.limit,Max.limit,Max.java.lang.Integer,Max]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [searchRequestDto.limit,limit]; arguments []; default message [limit],500]; default message [must be less than or equal to 500]]
+                  details: null
+                data: null
+        '401':
+          description: Access token expired
+          content:
+            application/json:
+              example:
+                error:
+                  code: UNAUTHORIZED
+                  message: |
+                    ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T11:54:38Z. Current time: 2019-11-29T15:07:30Z, a difference of 11572156 milliseconds.  Allowed clock skew: 0 milliseconds. details: null data: null
+        '422':
+          description: Invalid query value
+          content:
+            application/json:
+              example:
+                error:
+                  code: INVALID_QUERY_DATABLOCK_VALUE
+                  message: |
+                    Invalid query.dataBlock value. Valid data blocks are \"oneatlas-pleiades-fullscene\", \"oneatlas-pleiades-aoiclipped\", \"oneatlas-spot-fullscene\", \"oneatlas-spot-aoiclipped\", \"sobloo-sentinel1-l1c-grd-full\", \"sobloo-sentinel1-l1c-grd-aoiclipped\", \"sobloo-sentinel1-l1c-slc-full\", \"sobloo-sentinel2-lic-msi-full\", \"sobloo-sentinel2-lic-msi-aoiclipped\", \"sobloo-sentinel3-full\", \"sobloo-sentinel5-preview-full\", \"eusi\
+                  data: null
+      deprecated: false
+  '/catalog/{provider}/image/{id}/quicklook':
+    get:
+      tags:
+        - catalog
+      summary: Download a quicklook of an image
+      operationId: getQuicklookImage
+      parameters:
+        - name: provider
+          in: path
+          description: The name of the image provider - specified in the result of the catalog search.
+          required: true
+          schema:
+            type: string
+        - name: id
+          in: path
+          description: The ID of the image - specified in the result of the catalog search.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The quicklook image
+          content:
+            image/png: {}
+            image/jpeg: {}
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              example:
+                error:
+                  message: Not Found
+  '/workspaces/{workspace_id}/orders':
+    get:
+      tags:
+        - order
+      summary: List all orders from a given workspace
+      operationId: getOrdersUnderWorkspace
+      parameters:
+        - name: workspace_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Return placed and fulfilled orders
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                type: object
+                properties:
+                  data:
+                    required:
+                      - orders
+                    type: object
+                    properties:
+                      orders:
+                        type: array
+                        items:
+                          required:
+                            - createdAt
+                            - createdBy
+                            - dataProvider
+                            - id
+                            - status
+                            - updatedAt
+                            - updatedBy
+                            - workspaceId
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            userId:
+                              type: string
+                              format: uuid
+                            workspaceId:
+                              type: string
+                              format: uuid
+                            dataProvider:
+                              type: string
+                            status:
+                              type: string
+                              enum:
+                                - PLACED
+                                - FAILED
+                                - FULFILLED
+                                - BEING_FULFILLED
+                                - FAILED_PERMANENTLY
+                            createdAt:
+                              type: string
+                              format: date-time
+                            updatedAt:
+                              type: string
+                              format: date-time
+                            assets:
+                              type: array
+                              items:
+                                type: string
+                                format: uuid
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: An error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    format: int32
+                  message:
+                    type: string
+                  details:
+                    type: object
+    post:
+      tags:
+        - order
+      summary: Creates an order in a given workspace
+      operationId: createOrderUnderWorkspace
+      parameters:
+        - name: workspace_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - dataProviderName
+                - orderParams
+              type: object
+              properties:
+                dataProviderName:
+                  type: string
+                orderParams:
+                  required:
+                    - aoi
+                    - id
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    aoi:
+                      description: Geometry in GeoJSON format
+        required: true
+      responses:
+        '200':
+          description: Place an order successfully
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                type: object
+                properties:
+                  data:
+                    $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/post/responses/200/content/application~1json/schema'
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: An error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/get/responses/404/content/application~1json/schema'
+  '/workspaces/{workspace_id}/orders/estimate':
+    post:
+      tags:
+        - order
+      summary: Estimate in advance the credit costs for an order
+      operationId: estimateOrder
+      parameters:
+        - name: workspace_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/post/requestBody/content/application~1json/schema'
+        required: true
+      responses:
+        '200':
+          description: Estimate the credit costs for an order
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  data:
+                    credits: 300
+                  error: null
+                properties:
+                  data:
+                    $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders~1estimate/post/responses/200/content/application~1json/schema'
+        '400':
+          description: An error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/get/responses/404/content/application~1json/schema'
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+  '/workspaces/{workspace_id}/assets':
+    get:
+      tags:
+        - asset
+      summary: List assets from the Storage
+      operationId: listAssetsUnderWorkspace
+      parameters:
+        - name: workspace_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: pageRequest
+          in: query
+          required: true
+          schema:
+            $ref: '#/paths/~1accounts~1me~1credits~1history/get/parameters/3/schema'
+      responses:
+        '200':
+          description: Display assets
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      totalPages:
+                        type: integer
+                        format: int32
+                      totalElements:
+                        type: integer
+                        format: int64
+                      sort:
+                        $ref: '#/paths/~1accounts~1me~1credits~1history/get/parameters/3/schema/properties/sort'
+                      numberOfElements:
+                        type: integer
+                        format: int32
+                      last:
+                        type: boolean
+                      pageable:
+                        $ref: '#/paths/~1accounts~1me~1credits~1history/get/parameters/3/schema'
+                      first:
+                        type: boolean
+                      size:
+                        type: integer
+                        format: int32
+                      content:
+                        type: array
+                        items:
+                          $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1assets~1%7Basset_id%7D/get/responses/200/content/application~1json/schema/properties/data'
+                      number:
+                        type: integer
+                        format: int32
+                      empty:
+                        type: boolean
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: An error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/get/responses/404/content/application~1json/schema'
+  '/workspaces/{workspace_id}/assets/{asset_id}':
+    get:
+      tags:
+        - asset
+      summary: Get assets from the Storage
+      operationId: getAssetUnderWorkspace
+      parameters:
+        - name: workspace_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: asset_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Asset information
+          content:
+            application/json:
+              schema:
+                required:
+                  - data
+                type: object
+                properties:
+                  data:
+                    required:
+                      - createdAt
+                      - id
+                      - isDeleted
+                      - name
+                      - type
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      createdAt:
+                        type: string
+                        format: date-time
+                      type:
+                        type: string
+                        enum:
+                          - TASKING
+                          - ARCHIVED
+                          - CUSTOM
+                      name:
+                        type: string
+                      isDeleted:
+                        type: boolean
+                      size:
+                        type: integer
+                        format: int64
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: An error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/get/responses/404/content/application~1json/schema'
+  '/workspaces/{workspace_id}/assets/{asset_id}/downloadUrl':
+    get:
+      tags:
+        - asset
+      summary: Sign a URL that can be used to download an asset from the Storage
+      operationId: downloadAssetUnderWorkspace
+      parameters:
+        - name: workspace_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: asset_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Download URL
+          content:
+            application/json:
+              schema:
+                required:
+                  - url
+                type: object
+                properties:
+                  url:
+                    type: string
+                    format: url
+        '401':
+          $ref: '#/paths/~1catalog~1stac~1search/post/responses/401'
+        '404':
+          description: An error occurred
+          content:
+            application/json:
+              schema:
+                $ref: '#/paths/~1workspaces~1%7Bworkspace_id%7D~1orders/get/responses/404/content/application~1json/schema'

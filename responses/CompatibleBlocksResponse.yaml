@@ -1,0 +1,27 @@
+description: >-
+  JSON that contains all the blocks that are compatible
+  between the parent task and the child task.
+content:
+  application/json:
+    example:
+      error: null
+      data:
+        blocks:
+          - blockId: 4ed70368-d4e1-4462-bef6-14e768049471
+            name: sharpening
+            versionTag: 2.0.0
+          - blockId: a5b8b938-6fd6-4bac-92cd-dffd7f3169aa
+            name: zonal-statistics
+            versionTag: 2.0.0
+          - blockId: d350aa0b-ac31-4021-bbe6-fd8da366740a
+            name: tiling
+            versionTag: 2.0.0
+          - blockId: 295bf286-0748-474f-aa38-c1ac35151204
+            name: vectorising
+            versionTag: 2.0.0
+          - blockId: adf21e0a-98bf-41a9-a2cc-a59898a461ba
+            name: kmeans-clustering
+            versionTag: 2.0.0
+          - blockId: 18e6772f-cf33-4955-b7e4-61df8a108fd9
+            name: crs-conversion
+            versionTag: 2.0.0

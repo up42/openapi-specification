@@ -1,0 +1,9 @@
+required:
+  - aoi
+  - id
+type: object
+properties:
+  id:
+    type: string
+  aoi:
+    $ref: 'Geometry.yaml'

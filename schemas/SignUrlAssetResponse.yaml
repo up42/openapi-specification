@@ -1,0 +1,7 @@
+required:
+  - url
+type: object
+properties:
+  url:
+    type: string
+    format: url

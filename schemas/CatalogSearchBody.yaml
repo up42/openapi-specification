@@ -1,0 +1,30 @@
+title: CatalogSearchBody
+type: object
+example:
+  datetime: '2019-01-01T00:00:00Z/2019-01-15T23:59:59Z'
+  intersects:
+    type: Polygon
+    coordinates:
+      - - - 13.32113746
+          - 52.73971768
+        - - 13.15981158
+          - 52.2092959
+        - - 13.62204483
+          - 52.15632025
+        - - 13.78859517
+          - 52.68655119
+        - - 13.32113746
+          - 52.73971768
+    limit: 500
+    query:
+      cloudCoverage:
+        lte: 20
+      processingLevel:
+        in:
+          [ALBUM, SENSOR]
+      dataBlock:
+        in:
+          - oneatlas-pleiades-aoiclipped
+          - oneatlas-pleiades-fullscene
+          - oneatlas-spot-aoiclipped
+          - oneatlas-spot-fullscene

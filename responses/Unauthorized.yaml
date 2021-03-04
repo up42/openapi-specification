@@ -1,0 +1,12 @@
+description: Access token expired
+content:
+  application/json:
+    example:
+      error:
+        code: UNAUTHORIZED
+        message: >
+          ACCESS_TOKEN_EXPIRED: JWT expired at 2019-11-29T11:54:38Z.
+          Current time: 2019-11-29T15:07:30Z, a difference of 11572156
+          milliseconds.  Allowed clock skew: 0 milliseconds.
+          details: null
+          data: null

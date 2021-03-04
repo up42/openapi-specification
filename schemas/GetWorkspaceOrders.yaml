@@ -1,0 +1,8 @@
+required:
+  - orders
+type: object
+properties:
+  orders:
+    type: array
+    items:
+      $ref: 'Order.yaml'

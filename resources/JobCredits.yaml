@@ -1,0 +1,25 @@
+get:
+  tags:
+    - credit-history
+  description: Display the credits consumed for a given job.
+  operationId: getCreditUsageForJob
+  parameters:
+    - name: project_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: job_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ResponseJobCreditUsageObject.yaml'

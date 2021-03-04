@@ -1,0 +1,13 @@
+title: ProjectID
+description: >
+  The project ID is the string that appears in the URL when in
+  the console, e.g.,
+  `https://console.up42.com/projects/1b0015e3-cc4f-4da6-9761-fba74ba57f67`.
+  It is the component of the URL after `projects`.
+required:
+- type
+type: object
+properties:
+  type:
+    type: string
+example: 1b0015e3-cc4f-4da6-9761-fba74ba57f67

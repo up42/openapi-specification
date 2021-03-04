@@ -1,0 +1,8 @@
+type: object
+example:
+  data:
+    credits: 300
+  error: null
+properties:
+  data:
+    $ref: 'DisplayPrice.yaml'

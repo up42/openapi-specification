@@ -1,0 +1,20 @@
+type: object
+properties:
+  type:
+    type: string
+    enum:
+      - JOB_TASK
+      - CREDIT_PURCHASE
+      - TASKING
+      - ORDER
+      - MANUAL
+  createdAt:
+    type: string
+    format: date-time
+  createdBy:
+    $ref: 'Auditor.yaml'
+  delta:
+    type: integer
+    format: int64
+  details:
+    $ref: 'Details.yaml'

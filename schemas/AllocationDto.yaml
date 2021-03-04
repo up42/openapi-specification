@@ -1,0 +1,13 @@
+type: object
+properties:
+  allocationState:
+    type: string
+    enum:
+      - PENDING
+      - SUCCEEDED
+      - FAILED
+      - AWAIT_COMPLIANCE
+      - HOLD
+  expirationDate:
+    type: string
+    format: date-time

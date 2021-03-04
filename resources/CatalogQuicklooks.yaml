@@ -1,0 +1,33 @@
+get:
+  tags:
+    - catalog
+  summary: Download a quicklook of an image
+  operationId: getQuicklookImage
+  parameters:
+    - name: provider
+      in: path
+      description: The name of the image provider - specified in the result of the catalog search.
+      required: true
+      schema:
+        type: string
+    - name: id
+      in: path
+      description: The ID of the image - specified in the result of the catalog search.
+      required: true
+      schema:
+        type: string
+  responses:
+    '200':
+      description: The quicklook image
+      content:
+        image/png: {}
+        image/jpeg: {}
+    '401':
+      $ref: '../responses/Unauthorized.yaml'
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          example:
+            error:
+              message: Not Found

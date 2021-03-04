@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  userId:
+    type: string
+    format: uuid
+  workspaceId:
+    type: string
+    format: uuid
+  accountId:
+    type: string
+    format: uuid
+  creditsUsed:
+    type: integer
+    format: int32
+  createdAt:
+    type: string
+    format: date-time
+  jobRun:
+    $ref: 'JobRun.yaml'
+  blockConsumption:
+    $ref: 'BlockConsumption.yaml'
