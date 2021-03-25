@@ -2437,7 +2437,7 @@ components:
         isAccessGranted:
           type: boolean
         parameters:
-          $ref: string
+          type: object
         type:
           type: string
           enum:
