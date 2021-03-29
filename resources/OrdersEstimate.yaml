@@ -1,0 +1,33 @@
+post:
+  tags:
+    - order
+  summary: Estimate in advance the credit costs for an order
+  operationId: estimateOrder
+  parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CreateOrderRequest.yaml'
+    required: true
+  responses:
+    '200':
+      description: Estimate the credit costs for an order
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/DisplayPrice.yaml'
+    '400':
+      description: An error occurred
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yaml'
+    '401':
+      $ref: '../responses/Unauthorized.yaml'

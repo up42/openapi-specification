@@ -1,0 +1,11 @@
+type: object
+properties:
+  id:
+    type: string
+  type:
+    type: string
+    enum:
+      - INTERNAL
+      - ADMIN
+      - API_KEY
+      - USER

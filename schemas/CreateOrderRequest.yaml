@@ -1,0 +1,9 @@
+required:
+  - dataProviderName
+  - orderParams
+type: object
+properties:
+  dataProviderName:
+    type: string
+  orderParams:
+    $ref: 'OrderParams.yaml'

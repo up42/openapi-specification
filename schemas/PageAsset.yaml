@@ -1,0 +1,31 @@
+type: object
+properties:
+  totalPages:
+    type: integer
+    format: int32
+  totalElements:
+    type: integer
+    format: int64
+  sort:
+    $ref: 'Sort.yaml'
+  numberOfElements:
+    type: integer
+    format: int32
+  last:
+    type: boolean
+  pageable:
+    $ref: 'Pageable.yaml'
+  first:
+    type: boolean
+  size:
+    type: integer
+    format: int32
+  content:
+    type: array
+    items:
+      $ref: 'Asset.yaml'
+  number:
+    type: integer
+    format: int32
+  empty:
+    type: boolean

@@ -1,0 +1,36 @@
+get:
+  tags:
+    - credit-history
+  description: Display the overall credits consumed in your account.
+  operationId: getHistory
+  parameters:
+    - name: account_id
+      in: query
+      required: true
+      schema:
+        type: string
+        format: uuid
+    - name: from
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    - name: to
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+    - name: pageRequest
+      in: query
+      required: true
+      schema:
+        $ref: '../schemas/Pageable.yaml'
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ResponsePageTransactionObject.yaml'

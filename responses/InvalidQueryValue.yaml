@@ -1,0 +1,9 @@
+description: Invalid query value
+content:
+  application/json:
+    example:
+      error:
+        code: INVALID_QUERY_DATABLOCK_VALUE
+        message: >
+           Invalid query.dataBlock value. Valid data blocks are \"oneatlas-pleiades-fullscene\", \"oneatlas-pleiades-aoiclipped\", \"oneatlas-spot-fullscene\", \"oneatlas-spot-aoiclipped\", \"sobloo-sentinel1-l1c-grd-full\", \"sobloo-sentinel1-l1c-grd-aoiclipped\", \"sobloo-sentinel1-l1c-slc-full\", \"sobloo-sentinel2-lic-msi-full\", \"sobloo-sentinel2-lic-msi-aoiclipped\", \"sobloo-sentinel3-full\", \"sobloo-sentinel5-preview-full\", \"eusi\
+        data: null

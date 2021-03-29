@@ -1,0 +1,19 @@
+type: object
+properties:
+  projectId:
+    type: string
+    format: uuid
+  projectDisplayId:
+    type: string
+  jobId:
+    type: string
+    format: uuid
+  jobDisplayId:
+    type: string
+  creditsUsed:
+    type: integer
+    format: int64
+  tasks:
+    type: array
+    items:
+      $ref: 'JobTaskCreditUsage.yaml'

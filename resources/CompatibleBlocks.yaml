@@ -1,0 +1,51 @@
+get:
+  tags:
+    - workflows
+  summary: Get compatible blocks in a workflow
+  description: >-
+    Validates if a block added to a workflow is compatible
+    with the other blocks of that workflow. If no parent or child
+    blocks (workflow tasks) are given, then all blocks that have empty input
+    capabilities are returned.
+  operationId: GetCompatibleBlocks
+  parameters:
+  - name: project_id
+    in: path
+    required: true
+    schema:
+      $ref: '../schemas/ProjectID.yaml'
+  - name: workflow_id
+    in: path
+    required: true
+    schema:
+      $ref: '../schemas/WorkflowID.yaml'
+  - name: parentTaskName
+    in: query
+    schema:
+      type: string
+      example: sobloo-s1-grd-aoiclipped:1
+    description: >-
+      The first workflow task that will be the parent of the next task added in the
+      workflow. Adding multiple parents is currently not possible.
+  - name: childTaskName
+    in: query
+    schema:
+      type: string
+      example: tiling:1
+    description: >-
+      The workflow task that will be the child of the previous task from the
+      workflow. Multiple children can be provided by repeating the
+      parameter. Adding multiple children is possible when the workflow is a tree,
+      i.e., a given node in the directed graph representing the workflow has a unique path 
+      for more than one node. Example: a workflow where a data block
+      feeds into multiple processing blocks, leveraging parallel
+      processing.
+  responses:
+    200:
+      $ref: '../responses/CompatibleBlocksResponse.yaml'
+    401:
+      $ref: '../responses/Unauthorized.yaml'
+    404:
+      $ref: '../responses/WorkflowNotFound.yaml'
+    422:
+      $ref: '../responses/InexistingTaskResponse.yaml'

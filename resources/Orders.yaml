@@ -1,0 +1,60 @@
+get:
+  tags:
+    - order
+  summary: List all orders from a given workspace
+  operationId: getOrdersUnderWorkspace
+  parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: Return placed and fulfilled orders
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/GetOrders.yaml'
+    '401':
+      $ref: '../responses/Unauthorized.yaml'
+    '404':
+      description: An error occurred
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yaml'
+post:
+  tags:
+    - order
+  summary: Creates an order in a given workspace
+  operationId: createOrderUnderWorkspace
+  parameters:
+    - name: workspace_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: uuid
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: '../schemas/CreateOrderRequest.yaml'
+    required: true
+  responses:
+    '200':
+      description: Place an order successfully
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/CreateOrder.yaml'
+    '401':
+      $ref: '../responses/Unauthorized.yaml'
+    '404':
+      description: An error occurred
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/ErrorResponse.yaml'

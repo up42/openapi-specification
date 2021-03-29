@@ -1,0 +1,80 @@
+description: Result of the catalog search
+headers: {}
+content:
+  application/json:
+    example:
+      type: FeatureCollection
+      features:
+        - type: Feature
+          bbox:
+            - 172.61705
+            - -43.836509
+            - 172.728202
+            - -43.798937
+          geometry:
+            type: Polygon
+            coordinates:
+              - - - 172.728202
+                  - -43.836509
+                - - 172.61705
+                  - -43.836509
+                - - 172.61705
+                  - -43.798937
+                - - 172.728202
+                  - -43.798937
+                - - 172.728202
+                  - -43.836509
+          properties:
+            id: "20782479-ba92-49cc-a256-028a4b304060"
+            acquisitionDate: "2019-01-15T22:35:17Z"
+            constellation: "PHR"
+            providerName: "oneatlas"
+            blockNames:
+              - "oneatlas-pleiades-fullscene"
+              - "oneatlas-pleiades-aoiclipped"
+            cloudCoverage: 7.89
+            providerProperties:
+              - commercialReference: "SO19001525"
+              - acquisitionDate: "2019-01-15T22:35:17.68Z"
+              - qualified: false
+              - acquisitionStation: "SV1"
+              - sourceIdentifier: "DS_PHR1A_201901152234406_FR1_PX_E174S38_0821_01783"
+              - archivingCenter: "FR1"
+              - lastUpdateDate: "2019-01-29T18:07:27.120095377Z"
+              - archiveCorrelationId: "mmcat_2e0b18f9-58d6-4e66-b9eb-91c71189b25f"
+              - processingDate: "2019-01-17T10:12:12.365"
+              - parentIdentifier: "DS_PHR1A_201901152235176_FR1_PX_E174S38_0821_01787"
+              - azimuthAngle: 179.9705061137936
+              - title: "DS_PHR1A_201901152234406_FR1_PX_E174S38_0821_01783"
+              - resolution: 0.5
+              - workspaceTitle: "Public"
+              - blockNames:
+                - "oneatlas-pleiades-fullscene"
+                - "oneatlas-pleiades-aoiclipped"
+              - platform: "PHR1A"
+              - productCategory: "image"
+              - spectralRange: "VISIBLE"
+              - activityId: "802710ad-89d7-4f66-977c-386d593fcfce"
+              - processingLevel: "SENSOR"
+              - acquisitionIdentifier: "DS_PHR1A_201901152235176_FR1_PX_E174S38_0821_01787"
+              - productionStatus: "IN_CLOUD"
+              - sensorType: "OPTICAL"
+              - correlationId: "802710ad-89d7-4f66-977c-386d593fcfce"
+              - processorName: "DRS-MM V2.6vV2.6"
+              - workspaceName: "public"
+              - id: "20782479-ba92-49cc-a256-028a4b304060"
+              - publicationDate: "2019-01-29T18:07:27.120095377Z"
+              - illuminationElevationAngle: 60.25082389183731
+              - productType: "bundle"
+              - expirationDate: "2020-01-29T18:07:27.120095377Z"
+              - workspaceId: "0e33eb50-3404-48ad-b835-b0b4b72a5625"
+              - incidenceAngleAcrossTrack: -13.64008456741779
+              - dataUri: "gs://tcifg-idp-prod-datastore-data-pilot-nearline/PDWPHR_20190116080000_22_SO19001525-22-01_DS_PHR1A_201901152235176_FR1_PX_E174S38_0821_01787.zip"
+              - cloudCover: 7.89
+              - format: "image/jp2"
+              - illuminationAzimuthAngle: 65.73507622476698
+              - incidenceAngleAlongTrack: -9.741554499182111
+              - incidenceAngle: 16.55486525986212
+              - processingCenter: "FCMUGC"
+              - organisationName: "AIRBUS DS GEO"
+              - snowCover: 0

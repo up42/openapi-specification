@@ -1,0 +1,27 @@
+required:
+  - createdAt
+  - id
+  - isDeleted
+  - name
+  - type
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  createdAt:
+    type: string
+    format: date-time
+  type:
+    type: string
+    enum:
+      - TASKING
+      - ARCHIVED
+      - CUSTOM
+  name:
+    type: string
+  isDeleted:
+    type: boolean
+  size:
+    type: integer
+    format: int64

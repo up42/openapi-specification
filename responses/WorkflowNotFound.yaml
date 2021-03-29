@@ -1,0 +1,12 @@
+description: Not Found
+content:
+  application/json:
+    example:
+      error:
+        code: RESOURCE_NOT_FOUND
+        message: >
+          Workflow not found for id b16f2676-1420-4146-b000-529b9ee2b724
+          and projectId 1b0015e3-cc4f-4da6-9761-fba74ba57f67
+          and userId 8cd5de7b-82e2-4625-b094-d5392f1cf780.
+          details: null
+          data: null

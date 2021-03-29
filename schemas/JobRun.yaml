@@ -1,0 +1,31 @@
+type: object
+properties:
+  projectId:
+    type: string
+    format: uuid
+  projectName:
+    type: string
+  workflowId:
+    type: string
+    format: uuid
+  workflowName:
+    type: string
+  blockId:
+    type: string
+    format: uuid
+  blockName:
+    type: string
+  blockVersion:
+    type: string
+  blockDisplayName:
+    type: string
+  jobId:
+    type: string
+    format: uuid
+  jobName:
+    type: string
+  jobTaskId:
+    type: string
+    format: uuid
+  machineName:
+    type: string

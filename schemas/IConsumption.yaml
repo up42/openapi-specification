@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    type: string
+    format: uuid
+  userId:
+    type: string
+    format: uuid
+  workspaceId:
+    type: string
+    format: uuid
+  createdAt:
+    type: string
+    format: date-time
+  accountId:
+    type: string
+    format: uuid
+  creditsUsed:
+    type: integer
+    format: int32

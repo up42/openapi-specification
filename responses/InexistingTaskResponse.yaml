@@ -1,0 +1,11 @@
+description: >-
+  The task that was passed as either a parent or child task
+  is not in the workflow.
+content:
+  application/json:
+    example:
+      data: null
+      error:
+        code: 422
+        message: 'Workflow does not contain tasks: tiling:4'
+        details: null

@@ -1,0 +1,6 @@
+type: object
+properties:
+  data:
+    $ref: 'JobCreditUsage.yaml'
+  error:
+    $ref: 'ErrorResponseObject.yaml'
