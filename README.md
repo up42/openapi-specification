@@ -9,6 +9,22 @@ The specification follows the API development. It reflects the current
 state of the API. It is a continous work in progress since the API
 will change over time and the specification follows it.
 
+## Operations
+
+### View locally
+
+You'll need to install Docker for this.
+
+Run the following command:
+
+```
+docker run -it --rm -p 8080:80 \
+  -v $(pwd)/:/usr/share/nginx/html/swagger/ \
+  -e SPEC_URL=swagger/openapi.yaml redocly/redoc
+```
+
+This will serve the API definition locally at http://localhost:8080/ .
+
 ## Creating issues and contributing
 
 The specification is completely open and hence if you find any issue
