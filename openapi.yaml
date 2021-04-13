@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: UP42 API
-  version: '1.0'
+  version: '1.1'
   license:
     name: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
     url: http://creativecommons.org/licenses/by-nc-nd/4.0/
@@ -17,13 +17,30 @@ info:
     
     Alternatively, we recommend reading the step-by-step instructions from the [API walkthrough](https://docs.up42.com/going-further/api-walkthrough.html).
     
-    ## Project credentials
+    # Authenticate - Project Credentials
 
     Currently, accessing the UP42 API is on a project by project basis. The authorization token is 
     generated based on a **Project ID** and **Project API Key** that are found in the section 
     **Developers** on the [console](https://console.up42.com/). This token can only be used for a specific project.
     
     **Note**: We advise to safely store the Project ID and Project API Key and never share them with other users, because these credentials allow anyone to access your project and consume the UP42 credits associated with your account.
+    
+    # API Usage Constraints
+
+    Our mission is to optimize the access and usage of the diverse geospatial datasets and algorithms available on our marketplace. We expect that the UP42 API is used in a responsible and effective manner. 
+    
+    To prevent API abuse, we set up API usage constraints to guarantee the integrity and reliability of our service for all customers.
+    
+    ## Rate limiting
+    Based on the client IP address, we limit the number of HTTP requests that can be made with our API for a given time.
+    
+    **Current limit: 100 requests/second** for extended periods (including the possibility to burst up to 500 requests/second in a very short period).
+    Once the limit is exceeded, the API returns a **429 Too Many Requests** response status code.
+    
+    If you ever experience such an error code, please do one of the following:
+    - Adjust the request rate from your UP42 API client application such that the request rate follows an exponential backoff growth rate.
+    - Contact the customer support team and request the removal of this restriction, while providing a justification for this action. The customer support team will analyze the requests on a case-by-case basis and can waive this restriction for paying customers who provided a proper justification.
+    
   contact:
     name: 'UP42 Team'
     email: support@up42.com
