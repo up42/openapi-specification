@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: UP42 API
-  version: '1.1'
+  version: '1.0'
   license:
     name: Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
     url: http://creativecommons.org/licenses/by-nc-nd/4.0/
