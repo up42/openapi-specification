@@ -45,6 +45,10 @@ info:
     name: 'UP42 Team'
     email: support@up42.com
     url: 'https://up42.com/'
+  x-logo:
+    url: https://docs.up42.com/up42-docs-logo.svg
+    href: https://docs.up42.com
+    altText: UP42 Documentation
 
 servers:
 - url: https://api.up42.com
