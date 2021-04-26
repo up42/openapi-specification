@@ -794,7 +794,7 @@ paths:
           My+newly+created+job
         required: false
       requestBody:
-        description: ''
+        description: 'This request body includes the blocks **Pleiades Reflectance (Download)** and **Pan-sharpening**. For more information on how the parameters were configured, please visit the documentation articles [Pléiades Reflectance (Download)](https://docs.up42.com/blocks/data/defb134b-oneatlas-pleiades-fullscene/) and [Pan-sharpening](https://docs.up42.com/blocks/processing/903f0435-pansharpen/).'
         content:
           application/json:
             schema:
