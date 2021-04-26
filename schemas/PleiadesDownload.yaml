@@ -1,33 +1,33 @@
 title: PleiadesDownload
 required:
-- bbox
-- intersects
-- contains
-- time
-- limit
-- zoom_level
+  - bbox
+  - intersects
+  - contains
+  - time
+  - limit
+  - ids
+  - asset_ids
+  - time_series
+  - max_cloud_cover
 type: object
 properties:
   bbox:
     type: string
     nullable: true
+  intersects:
+    $ref: 'IntersectsOrContains.yaml'
+  contains:
+    $ref: 'IntersectsOrContains.yaml'
   time:
     type: string
     nullable: true
   limit:
     type: integer
     format: int32
-  intersects:
-    $ref: 'IntersectsOrContains.yaml'
-  contains:
-    $ref: 'IntersectsOrContains.yaml'
-  zoom_level:
-    type: integer
-    format: int32
   ids:
-    $ref: 'FullsceneIDorAssetID.yaml'
+    $ref: 'IdsOrOrderIds.yaml'
   asset_ids:
-    $ref: 'FullsceneIDorAssetID.yaml'
+    $ref: 'IdsOrOrderIds.yaml'
   time_series:
     type: array
     items:
@@ -37,13 +37,15 @@ properties:
     type: integer
     format: int32
 example:
-  ids: null
+  ids:
+    - DS_PHR1A_201906141121415_FR1_PX_E006N62_0809_07244
+  time: "2018-01-01T00:00:00+00:00/2021-12-31T23:59:59+00:00"
+  limit: 1
   asset_ids: null
-  time:
-    2018-01-01T00:00:00+00:00/2021-12-31T23:59:59+00:00
-  bbox: [ 
-    -2.040374,
-    48.651271,
-    -2.035546,
-    48.653652]
-  max_cloud_cover: 20
+  time_series: null
+  max_cloud_cover: 10
+  bbox:
+  - 6.553674
+  - 62.191632
+  - 6.560222
+  - 62.195116        
