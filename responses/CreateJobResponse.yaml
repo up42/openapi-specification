@@ -1,0 +1,43 @@
+description: OK
+headers: {}
+content:
+  application/json:
+    example:
+      error: null
+      data:
+        id: a7956d32-d700-4c9e-82a2-075bcffa5706
+        displayId: a7956d32
+        createdAt: '2020-02-09T23:35:45.281Z'
+        updatedAt: '2020-02-09T23:35:46.071Z'
+        status: NOT_STARTED
+        name: My newly created job
+        startedAt: null
+        finishedAt: null
+        inputs:
+          oneatlas-pleiades-fullscene:1:
+            ids:
+              - DS_PHR1A_201906141121415_FR1_PX_E006N62_0809_07244
+            time: "2018-01-01T00:00:00+00:00/2021-12-31T23:59:59+00:00"
+            limit: 1
+            asset_ids: null
+            time_series: null
+            max_cloud_cover: 10
+            bbox:
+            - 6.553674
+            - 62.191632
+            - 6.560222
+            - 62.195116    
+          pansharpen:1:
+            bbox:
+            - 6.553674
+            - 62.191632
+            - 6.560222
+            - 62.195116
+            method: SFIM
+            contains: null
+            intersects: null
+            clip_to_aoi: true
+            include_pan: false
+        mode: DEFAULT
+        workflowId: fc88746e-98b0-4fa7-b750-2f96cde0f385
+        workflowName: My brand new workflow with Pléiades and Pansharpening.

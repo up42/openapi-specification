@@ -404,7 +404,7 @@ paths:
             schema:
               $ref: '#/components/schemas/WorkflowRequest'
             example:
-              name: My brand new workflow with Pléaides and Pansharpening.
+              name: My brand new workflow with Pléiades and Pansharpening.
               description: >-
                 This workflow is for getting Pansharpened images with
                 all the bands from Pléiades.
@@ -802,7 +802,7 @@ paths:
         required: true
       responses:
         200:
-          $ref: '#/components/responses/CreateJobResponse'
+          $ref: './responses/CreateJobResponse.yaml'
         400:
           description: Incorrect specification of tasks.
           headers: {}
@@ -1692,103 +1692,10 @@ components:
       - pansharpening
       type: object
       properties:
-        pleiades-download:
-          $ref: '#/components/schemas/PleiadesDownload'
-        pansharpening:
-          $ref: '#/components/schemas/Pansharpening'
-    PleiadesDownload:
-      title: PleiadesDownload
-      required:
-      - bbox
-      - intersects
-      - contains
-      - time
-      - limit
-      - zoom_level
-      type: object
-      properties:
-        bbox:
-          type: string
-          nullable: true
-        time:
-          type: string
-          nullable: true
-        limit:
-          type: integer
-          format: int32
-        intersects:
-          $ref: '#/components/schemas/IntersectsOrContains'
-        contains:
-          $ref: '#/components/schemas/IntersectsOrContains'
-        zoom_level:
-          type: integer
-          format: int32
-        ids:
-          $ref: '#/components/schemas/IdsOrOrderIds'
-        order_ids:
-          $ref: '#/components/schemas/IdsOrOrderIds'
-        time_series:
-          type: array
-          items:
-            type: string
-          nullable: true
-      example:
-        ids:
-          - DS_PHR1A_201809212229135_FR1_PX_E172S44_0811_06543
-        order_ids:
-          - ce83f8b9-b892-4642-a891-6b682116bdb1
-    IntersectsOrContains:
-      title: Intersects
-      required:
-      - method
-      - coordinates
-      type: object
-      properties:
-        type:
-          type: string
-        coordinates:
-          type: array
-          items:
-            type: array
-            items:
-              type: number
-    Pansharpening:
-      title: Pansharpening
-      required:
-      - method
-      - include_pan
-      type: object
-      properties:
-        method:
-          description: The method used for pan-sharpening the image.
-          type: string
-          enum:
-            - SFIM
-            - Esri
-            - Brovey
-          default: SFIM
-        include_pan:
-          description: >-
-            Specifies to include or not the panchromatic
-            band in the output or not.
-          type: boolean
-          default: false
-      example:
-        method: SFIM
-        include_pan: false
-    IdsOrOrderIds:
-      title: IdsOrOrderIds
-      description: >-
-        Image IDs (scene ID) or order IDs if you previously bought the
-        image.
-      type: array
-      items:
-        type: string
-        nullable: true
-        default: null
-      example:
-        ids:
-          - S1B_IW_GRDH_1SDV_20191117T084136_20191117T084201_018965_023C6E_2A28
+        oneatlas-pleiades-fullscene:1:
+          $ref: './schemas/PleiadesDownload.yaml'
+        pansharpen:1:
+          $ref: './schemas/Pansharpening.yaml'
     ValidateBlocksManifestRequest:
       title: ValidateBlocksManifestRequest
       required:
@@ -1896,7 +1803,7 @@ components:
         bbox:
           $ref: '#/components/schemas/Bbox'
         intersects:
-          $ref: '#/components/schemas/IntersectsOrContains'
+          $ref: './schemas/IntersectsOrContains.yaml'
         time:
           $ref: '#/components/schemas/Time'
         limit:
@@ -1904,7 +1811,7 @@ components:
         zoom_level:
           $ref: '#/components/schemas/ZoomLevel'
         ids:
-          $ref: '#/components/schemas/IdsOrOrderIds'
+          $ref: './schemas/IdsOrOrderIds.yaml'
       example:
         bbox:
           type: string
@@ -4699,38 +4606,6 @@ components:
               code: 404
               message: Job not found for id 00f35ab9-59d7-4a30-ae73-e1eab7b08d0e and projectId 403c5d50-240a-45c3-b1f1-10d684d285ee and userId d39fe05a-400c-44f6-b770-86990f64b004
               details: null
-    CreateJobResponse:
-      description: OK
-      headers: {}
-      content:
-        application/json:
-          example:
-            error: null
-            data:
-              id: a7956d32-d700-4c9e-82a2-075bcffa5706
-              displayId: a7956d32
-              createdAt: '2020-02-09T23:35:45.281Z'
-              updatedAt: '2020-02-09T23:35:46.071Z'
-              status: NOT_STARTED
-              name: My newly created job
-              startedAt: null
-              finishedAt: null
-              inputs:
-                pansharpening:
-                  method: SFIM
-                  include_pan: false
-                pleiades-download:
-                  ids: null
-                  time: null
-                  limit: 1
-                  order_ids:
-                    - ce83f8b9-b892-4642-a891-6b682116bdb1
-                  intersects: null
-                  time_series: null
-              mode: DEFAULT
-              workflowId: fc88746e-98b0-4fa7-b750-2f96cde0f385
-              workflowName: My brand new workflow with Pléaides and
-                    Pansharpening.
     DataJsonOutput:
       description: OK
       headers: {}

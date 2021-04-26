@@ -1,0 +1,33 @@
+title: Pansharpening
+required:
+  - bbox
+  - intersects
+  - contains
+  - method
+  - clip_to_aoi
+  - include_pan
+type: object
+properties:
+  method:
+    description: The method used for pan-sharpening the image.
+    type: string
+    enum:
+      - SFIM
+      - Esri
+      - Brovey
+    default: SFIM
+  include_pan:
+    description: Specifies to include or not the panchromatic band in the output or not.
+    type: boolean
+    default: false
+example:
+  bbox:
+  - 6.553674
+  - 62.191632
+  - 6.560222
+  - 62.195116
+  method: SFIM
+  contains: null
+  intersects: null
+  clip_to_aoi: true
+  include_pan: false
