@@ -14,7 +14,7 @@ post:
       type: string
       example: application/json
   requestBody:
-    description: Request body containing the input parameters used for the catalog search - interval, geometry, cloud cover, number of images, satellite sensors, processing level.
+    description: Request body containing the input parameters used for the catalog search - interval, geometry, cloud cover, number of images, satellite sensors, resolution, usage type, delivery time.
     content:
       application/json:
         schema:

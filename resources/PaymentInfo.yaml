@@ -1,0 +1,18 @@
+get:
+  tags:
+    - account
+  operationId: getPaymentInfo
+  parameters:
+    - name: account_id
+      in: query
+      required: true
+      schema:
+        type: string
+        format: uuid
+  responses:
+    '200':
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '../responses/ResponsePaymentInfoDtoObject.yaml'

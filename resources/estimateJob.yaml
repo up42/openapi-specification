@@ -31,5 +31,5 @@ post:
       content:
         application/json:
           schema:
-            $ref: '../schemas/ResponseObjectObject.yaml'
+            $ref: '../responses/EstimateResponse.yaml'
       

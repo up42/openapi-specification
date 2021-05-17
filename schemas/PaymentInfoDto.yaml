@@ -1,0 +1,11 @@
+type: object
+properties:
+  accountId:
+    type: string
+    format: uuid
+  invoiceEmailAddress:
+    type: string
+  signUpCreditsReceived:
+    type: boolean
+  hasNonSignupAllocation:
+    type: boolean

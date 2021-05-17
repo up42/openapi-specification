@@ -17,7 +17,7 @@ info:
     
     Alternatively, we recommend reading the step-by-step instructions from the [API walkthrough](https://docs.up42.com/going-further/api-walkthrough.html).
     
-    # Authenticate - Project Credentials
+    # Project Credentials
 
     Currently, accessing the UP42 API is on a project by project basis. The authorization token is 
     generated based on a **Project ID** and **Project API Key** that are found in the section 
@@ -112,6 +112,8 @@ paths:
     $ref: "./resources/CreditBalance.yaml"
   /accounts/me/credits/history:
     $ref: "./resources/AccountCreditHistory.yaml"
+  /accounts/me/paymentInfo:
+    $ref: "./resources/PaymentInfo.yaml"
   /projects/{project_id}/workflows/{workflow_id}/credits:
     $ref: "./resources/WorkflowCredits.yaml"
   /projects/{project_id}/workflows/{workflow_id}/compatible-blocks:
