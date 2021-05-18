@@ -1,0 +1,6 @@
+type: object
+properties:
+  data:
+    $ref: '../schemas/PaymentInfoDto.yaml'
+  error:
+    $ref: '../schemas/ErrorResponseObject.yaml'

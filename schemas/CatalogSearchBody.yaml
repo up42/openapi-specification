@@ -19,12 +19,11 @@ example:
     query:
       cloudCoverage:
         lte: 20
-      processingLevel:
+      resolution:
+        lt: 10
+      up42:usageType:
         in:
-          [ALBUM, SENSOR]
-      dataBlock:
+          [DATA, ANALYTICS]
+      deliveryTime:
         in:
-          - oneatlas-pleiades-aoiclipped
-          - oneatlas-pleiades-fullscene
-          - oneatlas-spot-aoiclipped
-          - oneatlas-spot-fullscene
+          [MINUTES]
