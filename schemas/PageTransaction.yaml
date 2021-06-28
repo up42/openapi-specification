@@ -17,6 +17,7 @@ properties:
     type: integer
     format: int32
   sort:
+    deprecated: true
     $ref: 'Sort.yaml'
   first:
     type: boolean
@@ -24,6 +25,7 @@ properties:
     type: integer
     format: int32
   pageable:
+    deprecated: true
     $ref: 'Pageable.yaml'
   last:
     type: boolean

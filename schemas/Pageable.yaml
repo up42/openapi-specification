@@ -1,4 +1,5 @@
 type: object
+deprecated: true
 properties:
   sort:
     $ref: 'Sort.yaml'
